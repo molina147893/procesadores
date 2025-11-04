@@ -276,16 +276,6 @@ decl_salida : sal_tk lista_d_var	{
 
 //Expresiones
 
-expresion : exp_a	{
-
-}
-|	exp_b	{
-
-}
-|	funcion_ll	{
-
-};
-
 //Literal numerico??
 exp_a : exp_a op1_tk exp_a	{
 
@@ -340,6 +330,16 @@ exp_b : exp_b y_tk exp_b	{
 
 }
 |	abrir_parentesis_tk exp_b cerrar_parentesis_tk	{
+
+};
+
+expresion : exp_a	{
+
+}
+|	exp_b	{
+
+}
+|	funcion_ll	{
 
 };
 
