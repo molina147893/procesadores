@@ -1,5 +1,7 @@
 %{
 	#include <stdio.h>
+	#include <stdbool.h>
+	#include <string.h>
 	int yylex();
 	extern FILE* yyin;
 	void yyerror(char * s);
@@ -80,12 +82,13 @@
 %token div_mod_tk
 %token oprel_tk
 
-%right asignacion_tk
+
 %left o_tk y_tk
 %right no_tk
 %nonassoc oprel_tk //?
 %left op1_tk
 %left op2_tk div_mod_tk
+
 
 
 %%

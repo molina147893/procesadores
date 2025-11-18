@@ -34,6 +34,9 @@ punto_def \.
 dos_puntos_def :
 mayor_que_def >
 menor_que_def <
+mayor_igual_def >=
+menor_igual_def <=
+distinto_def <>
 subrango_def \.\. 
 entonces_def ->
 si_no_si_def \[\]
@@ -81,8 +84,8 @@ var_def (?i:var)
 y_def (?i:y)
 letra_o_digito_def {digito_def}|{letra_def}
 id_def {letra_def}{letra_o_digito_def}*
-literal_entero_def ({op1_def})?{digito_def}({digito_def})*((e|E){digito_def}{digito_def}*)? 
-literal_real_def ({op1_def}?{digito_def}{digito_def}*(\.{digito_def}{digito_def}*)?((e|E){digito_def}{digito_def}*)?)|({literal_entero_def}(r|R))
+literal_entero_def {digito_def}({digito_def})*((e|E){digito_def}{digito_def}*)? 
+literal_real_def ({digito_def}{digito_def}*(\.{digito_def}{digito_def}*)?((e|E){digito_def}{digito_def}*)?)|({literal_entero_def}(r|R))
 literal_booleano_def {verdadero_def}|{falso_def} //Teniendo las palabras reservadas verdadero y falso, hace falta este literal?
 literal_caracter_def \".\"
  //Barras laterales para diferenciar entre su valor caracter y su valor reservado.
@@ -290,6 +293,15 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 {menor_que_def}	{
 	return oprel_tk;
 }
+{mayor_igual_def}	{
+	return oprel_tk;
+}
+{menor_igual_def}	{
+	return oprel_tk;
+}
+{distinto_def}	{
+	return oprel_tk;
+}
 {subrango_def}	{
 	return subrango_tk;
 }
@@ -301,6 +313,12 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 }
 {si_no_si_def}	{
 	return si_no_si_tk;
+}
+{op1_def}	{
+	return op1_tk;
+}
+{op2_def}	{
+	return op2_tk;
 }
 .	{
 

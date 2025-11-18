@@ -70,13 +70,15 @@
 #line 1 "parser.y"
 
 	#include <stdio.h>
+	#include <stdbool.h>
+	#include <string.h>
 	int yylex();
 	extern FILE* yyin;
 	void yyerror(char * s);
 	//TablaDeConstantes tc;
 	#define YYDEBUG 1
 
-#line 80 "parser.tab.c"
+#line 82 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -609,17 +611,17 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    95,    95,    99,   103,   107,   110,   113,   117,   120,
-     123,   127,   131,   134,   137,   140,   146,   150,   154,   160,
-     163,   167,   170,   173,   176,   179,   182,   187,   190,   193,
-     196,   199,   203,   206,   210,   213,   219,   222,   227,   230,
-     233,   236,   239,   242,   246,   249,   253,   256,   260,   263,
-     266,   270,   274,   282,   285,   288,   291,   294,   297,   300,
-     305,   308,   313,   316,   319,   322,   325,   328,   331,   334,
-     338,   341,   344,   348,   351,   354,   357,   361,   364,   367,
-     370,   388,   391,   395,   398,   401,   404,   407,   411,   414,
-     418,   422,   425,   429,   432,   436,   440,   446,   450,   454,
-     458,   462,   465,   469,   472,   475,   479,   483,   487,   490
+       0,    98,    98,   102,   106,   110,   113,   116,   120,   123,
+     126,   130,   134,   137,   140,   143,   149,   153,   157,   163,
+     166,   170,   173,   176,   179,   182,   185,   190,   193,   196,
+     199,   202,   206,   209,   213,   216,   222,   225,   230,   233,
+     236,   239,   242,   245,   249,   252,   256,   259,   263,   266,
+     269,   273,   277,   285,   288,   291,   294,   297,   300,   303,
+     308,   311,   316,   319,   322,   325,   328,   331,   334,   337,
+     341,   344,   347,   351,   354,   357,   360,   364,   367,   370,
+     373,   391,   394,   398,   401,   404,   407,   410,   414,   417,
+     421,   425,   428,   432,   435,   439,   443,   449,   453,   457,
+     461,   465,   468,   472,   475,   478,   482,   486,   490,   493
 };
 #endif
 
@@ -1350,871 +1352,871 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* desc_algoritmo: algoritmo_tk id_tk punto_coma_tk cabecera_alg bloque_alg falgoritmo_tk punto_tk  */
-#line 95 "parser.y"
+#line 98 "parser.y"
                                                                                                         {
 
 }
-#line 1358 "parser.tab.c"
+#line 1360 "parser.tab.c"
     break;
 
   case 3: /* cabecera_alg: decl_globales decl_a_f decl_ent_sal comentario_tk  */
-#line 99 "parser.y"
+#line 102 "parser.y"
                                                                         {
 
 }
-#line 1366 "parser.tab.c"
+#line 1368 "parser.tab.c"
     break;
 
   case 4: /* bloque_alg: bloque comentario_tk  */
-#line 103 "parser.y"
+#line 106 "parser.y"
                                         {
 
 }
-#line 1374 "parser.tab.c"
+#line 1376 "parser.tab.c"
     break;
 
   case 5: /* decl_globales: declaracion_tipo decl_globales  */
-#line 107 "parser.y"
+#line 110 "parser.y"
                                                 {
 
 }
-#line 1382 "parser.tab.c"
+#line 1384 "parser.tab.c"
     break;
 
   case 6: /* decl_globales: declaracion_const decl_globales  */
-#line 110 "parser.y"
+#line 113 "parser.y"
                                         {
 
 }
-#line 1390 "parser.tab.c"
+#line 1392 "parser.tab.c"
     break;
 
   case 7: /* decl_globales: %empty  */
-#line 113 "parser.y"
+#line 116 "parser.y"
                 {
 
 }
-#line 1398 "parser.tab.c"
+#line 1400 "parser.tab.c"
     break;
 
   case 8: /* decl_a_f: accion_d decl_a_f  */
-#line 117 "parser.y"
-                                {
-
-}
-#line 1406 "parser.tab.c"
-    break;
-
-  case 9: /* decl_a_f: funcion_d decl_a_f  */
 #line 120 "parser.y"
                                 {
 
 }
-#line 1414 "parser.tab.c"
+#line 1408 "parser.tab.c"
+    break;
+
+  case 9: /* decl_a_f: funcion_d decl_a_f  */
+#line 123 "parser.y"
+                                {
+
+}
+#line 1416 "parser.tab.c"
     break;
 
   case 10: /* decl_a_f: %empty  */
-#line 123 "parser.y"
+#line 126 "parser.y"
                 {
 
 }
-#line 1422 "parser.tab.c"
+#line 1424 "parser.tab.c"
     break;
 
   case 11: /* bloque: declaraciones instrucciones  */
-#line 127 "parser.y"
+#line 130 "parser.y"
                                         {
 
 }
-#line 1430 "parser.tab.c"
+#line 1432 "parser.tab.c"
     break;
 
   case 12: /* declaraciones: declaracion_tipo declaraciones  */
-#line 131 "parser.y"
+#line 134 "parser.y"
                                                 {
 
 }
-#line 1438 "parser.tab.c"
+#line 1440 "parser.tab.c"
     break;
 
   case 13: /* declaraciones: declaracion_const declaraciones  */
-#line 134 "parser.y"
-                                        {
-
-}
-#line 1446 "parser.tab.c"
-    break;
-
-  case 14: /* declaraciones: declaracion_var declaraciones  */
 #line 137 "parser.y"
                                         {
 
 }
-#line 1454 "parser.tab.c"
+#line 1448 "parser.tab.c"
+    break;
+
+  case 14: /* declaraciones: declaracion_var declaraciones  */
+#line 140 "parser.y"
+                                        {
+
+}
+#line 1456 "parser.tab.c"
     break;
 
   case 15: /* declaraciones: %empty  */
-#line 140 "parser.y"
+#line 143 "parser.y"
                 {
 
 }
-#line 1462 "parser.tab.c"
+#line 1464 "parser.tab.c"
     break;
 
   case 16: /* declaracion_tipo: tipo_tk lista_d_tipo ftipo_tk punto_coma_tk  */
-#line 146 "parser.y"
+#line 149 "parser.y"
                                                                 {
 
 }
-#line 1470 "parser.tab.c"
+#line 1472 "parser.tab.c"
     break;
 
   case 17: /* declaracion_const: const_tk lista_d_cte fconst_tk punto_coma_tk  */
-#line 150 "parser.y"
+#line 153 "parser.y"
                                                                         {
 
 }
-#line 1478 "parser.tab.c"
+#line 1480 "parser.tab.c"
     break;
 
   case 18: /* declaracion_var: var_tk lista_d_var fvar_tk punto_coma_tk  */
-#line 154 "parser.y"
+#line 157 "parser.y"
                                                                 {
 
 }
-#line 1486 "parser.tab.c"
+#line 1488 "parser.tab.c"
     break;
 
   case 19: /* lista_d_tipo: id_tk igual_tk d_tipo punto_coma_tk lista_d_tipo  */
-#line 160 "parser.y"
+#line 163 "parser.y"
                                                                 {
 
 }
-#line 1494 "parser.tab.c"
+#line 1496 "parser.tab.c"
     break;
 
   case 20: /* lista_d_tipo: %empty  */
-#line 163 "parser.y"
+#line 166 "parser.y"
                 {
 
 }
-#line 1502 "parser.tab.c"
+#line 1504 "parser.tab.c"
     break;
 
   case 21: /* d_tipo: tupla_tk lista_campos ftupla_tk  */
-#line 167 "parser.y"
+#line 170 "parser.y"
                                                 {
 
 }
-#line 1510 "parser.tab.c"
+#line 1512 "parser.tab.c"
     break;
 
   case 22: /* d_tipo: tabla_tk inicio_array_tk expresion_t subrango_tk expresion_t fin_array_tk de_tk d_tipo  */
-#line 170 "parser.y"
+#line 173 "parser.y"
                                                                                                 {
 
 }
-#line 1518 "parser.tab.c"
+#line 1520 "parser.tab.c"
     break;
 
   case 23: /* d_tipo: id_tk  */
-#line 173 "parser.y"
+#line 176 "parser.y"
         {
 
 }
-#line 1526 "parser.tab.c"
+#line 1528 "parser.tab.c"
     break;
 
   case 24: /* d_tipo: expresion_t subrango_tk expresion_t  */
-#line 176 "parser.y"
+#line 179 "parser.y"
                                                 {
 
 }
-#line 1534 "parser.tab.c"
+#line 1536 "parser.tab.c"
     break;
 
   case 25: /* d_tipo: ref_tk d_tipo  */
-#line 179 "parser.y"
-                        {
-
-}
-#line 1542 "parser.tab.c"
-    break;
-
-  case 26: /* d_tipo: tipo_base  */
 #line 182 "parser.y"
                         {
 
 }
-#line 1550 "parser.tab.c"
+#line 1544 "parser.tab.c"
+    break;
+
+  case 26: /* d_tipo: tipo_base  */
+#line 185 "parser.y"
+                        {
+
+}
+#line 1552 "parser.tab.c"
     break;
 
   case 27: /* tipo_base: entero_tk  */
-#line 187 "parser.y"
+#line 190 "parser.y"
                         {
 
 }
-#line 1558 "parser.tab.c"
+#line 1560 "parser.tab.c"
     break;
 
   case 28: /* tipo_base: real_tk  */
-#line 190 "parser.y"
+#line 193 "parser.y"
                 {
 
 }
-#line 1566 "parser.tab.c"
+#line 1568 "parser.tab.c"
     break;
 
   case 29: /* tipo_base: booleano_tk  */
-#line 193 "parser.y"
-                        {
-
-}
-#line 1574 "parser.tab.c"
-    break;
-
-  case 30: /* tipo_base: cadena_tk  */
 #line 196 "parser.y"
                         {
 
 }
-#line 1582 "parser.tab.c"
+#line 1576 "parser.tab.c"
     break;
 
-  case 31: /* tipo_base: caracter_tk  */
+  case 30: /* tipo_base: cadena_tk  */
 #line 199 "parser.y"
                         {
 
 }
-#line 1590 "parser.tab.c"
+#line 1584 "parser.tab.c"
+    break;
+
+  case 31: /* tipo_base: caracter_tk  */
+#line 202 "parser.y"
+                        {
+
+}
+#line 1592 "parser.tab.c"
     break;
 
   case 32: /* expresion_t: expresion  */
-#line 203 "parser.y"
+#line 206 "parser.y"
                         {
 
 }
-#line 1598 "parser.tab.c"
+#line 1600 "parser.tab.c"
     break;
 
   case 33: /* expresion_t: literal_caracter_tk  */
-#line 206 "parser.y"
+#line 209 "parser.y"
                                 {
 
 }
-#line 1606 "parser.tab.c"
+#line 1608 "parser.tab.c"
     break;
 
   case 34: /* lista_campos: id_tk dos_puntos_tk d_tipo punto_coma_tk lista_campos  */
-#line 210 "parser.y"
+#line 213 "parser.y"
                                                                         {
 
 }
-#line 1614 "parser.tab.c"
+#line 1616 "parser.tab.c"
     break;
 
   case 35: /* lista_campos: %empty  */
-#line 213 "parser.y"
+#line 216 "parser.y"
                 {
 
 }
-#line 1622 "parser.tab.c"
+#line 1624 "parser.tab.c"
     break;
 
   case 36: /* lista_d_cte: id_tk igual_tk literal punto_coma_tk lista_d_cte  */
-#line 219 "parser.y"
+#line 222 "parser.y"
                                                                 {
 
 }
-#line 1630 "parser.tab.c"
+#line 1632 "parser.tab.c"
     break;
 
   case 37: /* lista_d_cte: %empty  */
-#line 222 "parser.y"
+#line 225 "parser.y"
                 {
 
 }
-#line 1638 "parser.tab.c"
+#line 1640 "parser.tab.c"
     break;
 
   case 38: /* literal: literal_entero_tk  */
-#line 227 "parser.y"
+#line 230 "parser.y"
                                 {
 
 }
-#line 1646 "parser.tab.c"
+#line 1648 "parser.tab.c"
     break;
 
   case 39: /* literal: literal_real_tk  */
-#line 230 "parser.y"
-                        {
-
-}
-#line 1654 "parser.tab.c"
-    break;
-
-  case 40: /* literal: verdadero_tk  */
 #line 233 "parser.y"
                         {
 
 }
-#line 1662 "parser.tab.c"
+#line 1656 "parser.tab.c"
     break;
 
-  case 41: /* literal: falso_tk  */
+  case 40: /* literal: verdadero_tk  */
 #line 236 "parser.y"
                         {
 
 }
-#line 1670 "parser.tab.c"
+#line 1664 "parser.tab.c"
+    break;
+
+  case 41: /* literal: falso_tk  */
+#line 239 "parser.y"
+                        {
+
+}
+#line 1672 "parser.tab.c"
     break;
 
   case 42: /* literal: literal_cadena_tk  */
-#line 239 "parser.y"
-                                {
-
-}
-#line 1678 "parser.tab.c"
-    break;
-
-  case 43: /* literal: literal_caracter_tk  */
 #line 242 "parser.y"
                                 {
 
 }
-#line 1686 "parser.tab.c"
+#line 1680 "parser.tab.c"
+    break;
+
+  case 43: /* literal: literal_caracter_tk  */
+#line 245 "parser.y"
+                                {
+
+}
+#line 1688 "parser.tab.c"
     break;
 
   case 44: /* lista_d_var: lista_id dos_puntos_tk d_tipo punto_coma_tk lista_d_var  */
-#line 246 "parser.y"
+#line 249 "parser.y"
                                                                         {
 
 }
-#line 1694 "parser.tab.c"
+#line 1696 "parser.tab.c"
     break;
 
   case 45: /* lista_d_var: %empty  */
-#line 249 "parser.y"
+#line 252 "parser.y"
                 {
 
 }
-#line 1702 "parser.tab.c"
+#line 1704 "parser.tab.c"
     break;
 
   case 46: /* lista_id: id_tk coma_tk lista_id  */
-#line 253 "parser.y"
+#line 256 "parser.y"
                                         {
 
 }
-#line 1710 "parser.tab.c"
+#line 1712 "parser.tab.c"
     break;
 
   case 47: /* lista_id: id_tk  */
-#line 256 "parser.y"
+#line 259 "parser.y"
                 {
 
 }
-#line 1718 "parser.tab.c"
+#line 1720 "parser.tab.c"
     break;
 
   case 48: /* decl_ent_sal: decl_ent  */
-#line 260 "parser.y"
+#line 263 "parser.y"
                         {
 
 }
-#line 1726 "parser.tab.c"
+#line 1728 "parser.tab.c"
     break;
 
   case 49: /* decl_ent_sal: decl_ent decl_salida  */
-#line 263 "parser.y"
+#line 266 "parser.y"
                                 {
 
 }
-#line 1734 "parser.tab.c"
+#line 1736 "parser.tab.c"
     break;
 
   case 50: /* decl_ent_sal: decl_salida  */
-#line 266 "parser.y"
+#line 269 "parser.y"
                 {
 
 }
-#line 1742 "parser.tab.c"
+#line 1744 "parser.tab.c"
     break;
 
   case 51: /* decl_ent: ent_tk lista_d_var  */
-#line 270 "parser.y"
+#line 273 "parser.y"
                                 {
 
 }
-#line 1750 "parser.tab.c"
+#line 1752 "parser.tab.c"
     break;
 
   case 52: /* decl_salida: sal_tk lista_d_var  */
-#line 274 "parser.y"
+#line 277 "parser.y"
                                         {
 
 }
-#line 1758 "parser.tab.c"
+#line 1760 "parser.tab.c"
     break;
 
   case 53: /* exp_a: exp_a op1_tk exp_a  */
-#line 282 "parser.y"
+#line 285 "parser.y"
                                 {
 
 }
-#line 1766 "parser.tab.c"
+#line 1768 "parser.tab.c"
     break;
 
   case 54: /* exp_a: exp_a op2_tk exp_a  */
-#line 285 "parser.y"
+#line 288 "parser.y"
                         {
 
 }
-#line 1774 "parser.tab.c"
+#line 1776 "parser.tab.c"
     break;
 
   case 55: /* exp_a: exp_a div_mod_tk exp_a  */
-#line 288 "parser.y"
+#line 291 "parser.y"
                                 {
 
 }
-#line 1782 "parser.tab.c"
+#line 1784 "parser.tab.c"
     break;
 
   case 56: /* exp_a: abrir_parentesis_tk exp_a cerrar_parentesis_tk  */
-#line 291 "parser.y"
+#line 294 "parser.y"
                                                         {
 
 }
-#line 1790 "parser.tab.c"
+#line 1792 "parser.tab.c"
     break;
 
   case 57: /* exp_a: operando_a  */
-#line 294 "parser.y"
+#line 297 "parser.y"
                         {
 
 }
-#line 1798 "parser.tab.c"
+#line 1800 "parser.tab.c"
     break;
 
   case 58: /* exp_a: literal_numerico  */
-#line 297 "parser.y"
+#line 300 "parser.y"
                                 {
 
 }
-#line 1806 "parser.tab.c"
+#line 1808 "parser.tab.c"
     break;
 
   case 59: /* exp_a: op1_tk exp_a  */
-#line 300 "parser.y"
+#line 303 "parser.y"
                         {
 
 }
-#line 1814 "parser.tab.c"
+#line 1816 "parser.tab.c"
     break;
 
   case 60: /* literal_numerico: literal_entero_tk  */
-#line 305 "parser.y"
+#line 308 "parser.y"
                                         {
 
 }
-#line 1822 "parser.tab.c"
+#line 1824 "parser.tab.c"
     break;
 
   case 61: /* literal_numerico: literal_real_tk  */
-#line 308 "parser.y"
+#line 311 "parser.y"
                         {
 
 }
-#line 1830 "parser.tab.c"
+#line 1832 "parser.tab.c"
     break;
 
   case 62: /* exp_b: exp_b y_tk exp_b  */
-#line 313 "parser.y"
-                                {
-
-}
-#line 1838 "parser.tab.c"
-    break;
-
-  case 63: /* exp_b: exp_b o_tk exp_b  */
 #line 316 "parser.y"
                                 {
 
 }
-#line 1846 "parser.tab.c"
+#line 1840 "parser.tab.c"
+    break;
+
+  case 63: /* exp_b: exp_b o_tk exp_b  */
+#line 319 "parser.y"
+                                {
+
+}
+#line 1848 "parser.tab.c"
     break;
 
   case 64: /* exp_b: no_tk exp_b  */
-#line 319 "parser.y"
-                        {
-
-}
-#line 1854 "parser.tab.c"
-    break;
-
-  case 65: /* exp_b: operando_b  */
 #line 322 "parser.y"
                         {
 
 }
-#line 1862 "parser.tab.c"
+#line 1856 "parser.tab.c"
     break;
 
-  case 66: /* exp_b: verdadero_tk  */
+  case 65: /* exp_b: operando_b  */
 #line 325 "parser.y"
                         {
 
 }
-#line 1870 "parser.tab.c"
+#line 1864 "parser.tab.c"
     break;
 
-  case 67: /* exp_b: falso_tk  */
+  case 66: /* exp_b: verdadero_tk  */
 #line 328 "parser.y"
                         {
 
 }
-#line 1878 "parser.tab.c"
+#line 1872 "parser.tab.c"
+    break;
+
+  case 67: /* exp_b: falso_tk  */
+#line 331 "parser.y"
+                        {
+
+}
+#line 1880 "parser.tab.c"
     break;
 
   case 68: /* exp_b: expresion oprel_tk expresion  */
-#line 331 "parser.y"
+#line 334 "parser.y"
                                         {
 
 }
-#line 1886 "parser.tab.c"
+#line 1888 "parser.tab.c"
     break;
 
   case 69: /* exp_b: abrir_parentesis_tk exp_b cerrar_parentesis_tk  */
-#line 334 "parser.y"
+#line 337 "parser.y"
                                                         {
 
 }
-#line 1894 "parser.tab.c"
+#line 1896 "parser.tab.c"
     break;
 
   case 70: /* expresion: exp_a  */
-#line 338 "parser.y"
+#line 341 "parser.y"
                         {
 
 }
-#line 1902 "parser.tab.c"
+#line 1904 "parser.tab.c"
     break;
 
   case 71: /* expresion: exp_b  */
-#line 341 "parser.y"
+#line 344 "parser.y"
                 {
 
 }
-#line 1910 "parser.tab.c"
+#line 1912 "parser.tab.c"
     break;
 
   case 72: /* expresion: funcion_ll  */
-#line 344 "parser.y"
+#line 347 "parser.y"
                         {
 
 }
-#line 1918 "parser.tab.c"
+#line 1920 "parser.tab.c"
     break;
 
   case 73: /* operando_a: id_tk  */
-#line 348 "parser.y"
+#line 351 "parser.y"
                         {
 
 }
-#line 1926 "parser.tab.c"
+#line 1928 "parser.tab.c"
     break;
 
   case 74: /* operando_a: operando_a punto_tk operando_a  */
-#line 351 "parser.y"
+#line 354 "parser.y"
                                         {
 
 }
-#line 1934 "parser.tab.c"
+#line 1936 "parser.tab.c"
     break;
 
   case 75: /* operando_a: operando_a inicio_array_tk expresion fin_array_tk  */
-#line 354 "parser.y"
+#line 357 "parser.y"
                                                                 {
 
 }
-#line 1942 "parser.tab.c"
+#line 1944 "parser.tab.c"
     break;
 
   case 76: /* operando_a: operando_a ref_tk  */
-#line 357 "parser.y"
+#line 360 "parser.y"
                                 {
 
 }
-#line 1950 "parser.tab.c"
+#line 1952 "parser.tab.c"
     break;
 
   case 77: /* operando_b: id_bool_tk  */
-#line 361 "parser.y"
+#line 364 "parser.y"
                         {
 
 }
-#line 1958 "parser.tab.c"
+#line 1960 "parser.tab.c"
     break;
 
   case 78: /* operando_b: operando_b punto_tk operando_b  */
-#line 364 "parser.y"
+#line 367 "parser.y"
                                         {
 
 }
-#line 1966 "parser.tab.c"
+#line 1968 "parser.tab.c"
     break;
 
   case 79: /* operando_b: operando_b inicio_array_tk expresion fin_array_tk  */
-#line 367 "parser.y"
+#line 370 "parser.y"
                                                                 {
 
 }
-#line 1974 "parser.tab.c"
+#line 1976 "parser.tab.c"
     break;
 
   case 80: /* operando_b: operando_b ref_tk  */
-#line 370 "parser.y"
+#line 373 "parser.y"
                                 {
 
 }
-#line 1982 "parser.tab.c"
+#line 1984 "parser.tab.c"
     break;
 
   case 81: /* instrucciones: instruccion punto_coma_tk instrucciones  */
-#line 388 "parser.y"
+#line 391 "parser.y"
                                                         {
 
 }
-#line 1990 "parser.tab.c"
+#line 1992 "parser.tab.c"
     break;
 
   case 82: /* instrucciones: instruccion  */
-#line 391 "parser.y"
+#line 394 "parser.y"
                         {
 
 }
-#line 1998 "parser.tab.c"
+#line 2000 "parser.tab.c"
     break;
 
   case 83: /* instruccion: continuar_tk  */
-#line 395 "parser.y"
+#line 398 "parser.y"
                                 {
 
 }
-#line 2006 "parser.tab.c"
+#line 2008 "parser.tab.c"
     break;
 
   case 84: /* instruccion: asignacion  */
-#line 398 "parser.y"
-                        {
-
-}
-#line 2014 "parser.tab.c"
-    break;
-
-  case 85: /* instruccion: alternativa  */
 #line 401 "parser.y"
                         {
 
 }
-#line 2022 "parser.tab.c"
+#line 2016 "parser.tab.c"
     break;
 
-  case 86: /* instruccion: iteracion  */
+  case 85: /* instruccion: alternativa  */
 #line 404 "parser.y"
                         {
 
 }
-#line 2030 "parser.tab.c"
+#line 2024 "parser.tab.c"
     break;
 
-  case 87: /* instruccion: accion_ll  */
+  case 86: /* instruccion: iteracion  */
 #line 407 "parser.y"
                         {
 
 }
-#line 2038 "parser.tab.c"
+#line 2032 "parser.tab.c"
+    break;
+
+  case 87: /* instruccion: accion_ll  */
+#line 410 "parser.y"
+                        {
+
+}
+#line 2040 "parser.tab.c"
     break;
 
   case 88: /* asignacion: operando_a asignacion_tk expresion  */
-#line 411 "parser.y"
-                                                {
-
-}
-#line 2046 "parser.tab.c"
-    break;
-
-  case 89: /* asignacion: operando_b asignacion_tk expresion  */
 #line 414 "parser.y"
                                                 {
 
 }
-#line 2054 "parser.tab.c"
+#line 2048 "parser.tab.c"
+    break;
+
+  case 89: /* asignacion: operando_b asignacion_tk expresion  */
+#line 417 "parser.y"
+                                                {
+
+}
+#line 2056 "parser.tab.c"
     break;
 
   case 90: /* alternativa: si_tk expresion entonces_tk instrucciones lista_opciones fsi_tk  */
-#line 418 "parser.y"
+#line 421 "parser.y"
                                                                                 {
 
 }
-#line 2062 "parser.tab.c"
+#line 2064 "parser.tab.c"
     break;
 
   case 91: /* lista_opciones: si_no_si_tk expresion entonces_tk instrucciones lista_opciones  */
-#line 422 "parser.y"
+#line 425 "parser.y"
                                                                                 {
 
 }
-#line 2070 "parser.tab.c"
+#line 2072 "parser.tab.c"
     break;
 
   case 92: /* lista_opciones: %empty  */
-#line 425 "parser.y"
+#line 428 "parser.y"
                 {
 
 }
-#line 2078 "parser.tab.c"
+#line 2080 "parser.tab.c"
     break;
 
   case 93: /* iteracion: it_cota_fija  */
-#line 429 "parser.y"
+#line 432 "parser.y"
                                 {
 
 }
-#line 2086 "parser.tab.c"
+#line 2088 "parser.tab.c"
     break;
 
   case 94: /* iteracion: it_cota_exp  */
-#line 432 "parser.y"
+#line 435 "parser.y"
                         {
 
 }
-#line 2094 "parser.tab.c"
+#line 2096 "parser.tab.c"
     break;
 
   case 95: /* it_cota_exp: mientras_tk expresion hacer_tk instrucciones fmientras_tk  */
-#line 436 "parser.y"
+#line 439 "parser.y"
                                                                         {
 
 }
-#line 2102 "parser.tab.c"
+#line 2104 "parser.tab.c"
     break;
 
   case 96: /* it_cota_fija: para_tk id_tk asignacion_tk expresion hasta_tk expresion hacer_tk instrucciones fpara_tk  */
-#line 440 "parser.y"
+#line 443 "parser.y"
                                                                                                         {
 
 }
-#line 2110 "parser.tab.c"
+#line 2112 "parser.tab.c"
     break;
 
   case 97: /* accion_d: accion_tk a_cabecera bloque faccion_tk  */
-#line 446 "parser.y"
+#line 449 "parser.y"
                                                         {
 
 }
-#line 2118 "parser.tab.c"
+#line 2120 "parser.tab.c"
     break;
 
   case 98: /* funcion_d: funcion_tk f_cabecera bloque dev_tk expresion ffuncion_tk  */
-#line 450 "parser.y"
+#line 453 "parser.y"
                                                                         {
 
 }
-#line 2126 "parser.tab.c"
+#line 2128 "parser.tab.c"
     break;
 
   case 99: /* a_cabecera: id_tk abrir_parentesis_tk d_par_form cerrar_parentesis_tk punto_coma_tk  */
-#line 454 "parser.y"
+#line 457 "parser.y"
                                                                                         {
 
 }
-#line 2134 "parser.tab.c"
+#line 2136 "parser.tab.c"
     break;
 
   case 100: /* f_cabecera: id_tk abrir_parentesis_tk lista_d_var cerrar_parentesis_tk dev_tk d_tipo punto_coma_tk  */
-#line 458 "parser.y"
+#line 461 "parser.y"
                                                                                                         {
 
 }
-#line 2142 "parser.tab.c"
+#line 2144 "parser.tab.c"
     break;
 
   case 101: /* d_par_form: d_p_form punto_coma_tk d_par_form  */
-#line 462 "parser.y"
+#line 465 "parser.y"
                                                 {
 
 }
-#line 2150 "parser.tab.c"
+#line 2152 "parser.tab.c"
     break;
 
   case 102: /* d_par_form: %empty  */
-#line 465 "parser.y"
+#line 468 "parser.y"
                 {
 
 }
-#line 2158 "parser.tab.c"
+#line 2160 "parser.tab.c"
     break;
 
   case 103: /* d_p_form: ent_tk lista_id dos_puntos_tk d_tipo  */
-#line 469 "parser.y"
-                                                {
-
-}
-#line 2166 "parser.tab.c"
-    break;
-
-  case 104: /* d_p_form: sal_tk lista_id dos_puntos_tk d_tipo  */
 #line 472 "parser.y"
                                                 {
 
 }
-#line 2174 "parser.tab.c"
+#line 2168 "parser.tab.c"
+    break;
+
+  case 104: /* d_p_form: sal_tk lista_id dos_puntos_tk d_tipo  */
+#line 475 "parser.y"
+                                                {
+
+}
+#line 2176 "parser.tab.c"
     break;
 
   case 105: /* d_p_form: e_s_tk lista_id dos_puntos_tk d_tipo  */
-#line 475 "parser.y"
+#line 478 "parser.y"
                                         {
 
 }
-#line 2182 "parser.tab.c"
+#line 2184 "parser.tab.c"
     break;
 
   case 106: /* accion_ll: id_tk abrir_parentesis_tk l_ll cerrar_parentesis_tk  */
-#line 479 "parser.y"
+#line 482 "parser.y"
                                                                 {
 
 }
-#line 2190 "parser.tab.c"
+#line 2192 "parser.tab.c"
     break;
 
   case 107: /* funcion_ll: id_tk abrir_parentesis_tk l_ll cerrar_parentesis_tk  */
-#line 483 "parser.y"
+#line 486 "parser.y"
                                                                         {
 
 }
-#line 2198 "parser.tab.c"
+#line 2200 "parser.tab.c"
     break;
 
   case 108: /* l_ll: expresion coma_tk l_ll  */
-#line 487 "parser.y"
+#line 490 "parser.y"
                                 {
 
 }
-#line 2206 "parser.tab.c"
+#line 2208 "parser.tab.c"
     break;
 
   case 109: /* l_ll: expresion  */
-#line 490 "parser.y"
+#line 493 "parser.y"
                         {
 
 }
-#line 2214 "parser.tab.c"
+#line 2216 "parser.tab.c"
     break;
 
 
-#line 2218 "parser.tab.c"
+#line 2220 "parser.tab.c"
 
       default: break;
     }
@@ -2407,7 +2409,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 494 "parser.y"
+#line 497 "parser.y"
 
 
 int main(int argc, char **argv){
