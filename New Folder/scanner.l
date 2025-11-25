@@ -258,7 +258,8 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	return comentario_tk;
 }
 {id_def}	{
-	return id_tk;
+	yylval.cad = strdup(yytext);
+    return id_tk;
 }
 {abrir_parentesis_def}	{
 	return abrir_parentesis_tk;
