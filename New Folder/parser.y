@@ -150,7 +150,9 @@ declaraciones : declaracion_tipo declaraciones	{
 |	%empty	{
 };
 
-//Declaraciones
+
+//DECLARACIONES
+
 
 declaracion_tipo : tipo_tk lista_d_tipo ftipo_tk punto_coma_tk	{
 };
@@ -261,7 +263,8 @@ decl_ent : ent_tk lista_d_var	{
 decl_salida : sal_tk lista_d_var	{
 };
 
-//Expresiones
+
+//EXPRESIONES
 
 //Literal numerico??
 exp_a : exp_a op1_tk exp_a	{
@@ -341,7 +344,8 @@ operando_b : id_bool_tk	{
 
 };*/
 
-//Instrucciones
+
+//INSTRUCCIONES
 
 instrucciones : instruccion punto_coma_tk instrucciones	{
 }
@@ -383,7 +387,8 @@ it_cota_exp : mientras_tk expresion hacer_tk instrucciones fmientras_tk	{
 it_cota_fija : para_tk id_tk asignacion_tk expresion hasta_tk expresion hacer_tk instrucciones fpara_tk	{
 };
 
-//Acciones y funciones
+
+//ACCIONES Y FUNCIONES
 
 accion_d : accion_tk a_cabecera bloque faccion_tk	{
 };

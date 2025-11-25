@@ -12,13 +12,9 @@ typedef struct entradaTS {
 
 extern entradaTS* TS;
 
-void insertarTS(char* nombre);       // Inserta sin tipo (declaración inmediata)
-
-void modificarTipoTS(char* nombre, NombreDeTipoT tipo);
+void insertarTS(char* nombre, NombreDeTipoT tipo);
 
 NombreDeTipoT consultarTipoTS(char* nombre);
-
-char* newtemp();                     // Crea un temporal y lo mete en TS
 
 void imprimirTS();                   // opcional
 
