@@ -2,7 +2,12 @@
 	#include <stdio.h>
 	#include <stdbool.h>
 	#include <string.h>
-	#include "tablaSimbolos.h"
+	
+	#include "nombresDeTipos.h"    // Para NombreDeTipoT
+	#include "traducciones.h"      // Para tipoListaNombre
+	#include "tablaSimbolos.h"     // Para las rutinas de TS
+	#include "literal.h"
+	
 	int yylex();
 	extern FILE* yyin;
 	void yyerror(char * s);
@@ -17,6 +22,8 @@
     char car; // literal caracter
     int booleano; // verdadero 1 /falso 0 ??
     char* cad; // literal cadena
+    NombreDeTipoT tipo;         // para d_tipo / tipo_base
+    tipoListaNombre* lista; // para lista de ids
 }
 
 
@@ -101,7 +108,8 @@
 %left op1_tk
 %left op2_tk div_mod_tk
 
-
+%type <tipo> d_tipo tipo_base
+%type <lista> lista_d_var lista_id
 
 %%
 
@@ -171,18 +179,24 @@ d_tipo : tupla_tk lista_campos ftupla_tk	{
 |	ref_tk d_tipo	{
 }
 |	tipo_base	{
+	$$ = $1;
 };
 
 //Esto lo hemos añadido nosotros, esta bien o hay que meterlo directamente en lista_d_tipo
-tipo_base : entero_tk	{
+tipo_base : entero_tk { 
+	$$ = ENTERO; 
 }
-|	real_tk	{
+| real_tk    { 
+	$$ = REAL; 
 }
-|	booleano_tk	{
+| booleano_tk { 
+	$$ = BOOLEANO; 
 }
-|	cadena_tk	{
+| cadena_tk  { 
+	$$ = CADENA; 
 }
-|	caracter_tk	{
+| caracter_tk { 
+	$$ = CARACTER; 
 };
 
 expresion_t : expresion	{
@@ -217,13 +231,21 @@ literal : literal_entero_tk	{
 };
 
 lista_d_var : lista_id dos_puntos_tk d_tipo punto_coma_tk lista_d_var	{
+	insertarListaEnTS($1, $3); 
+	liberarListaNombre($1); 
+	$$ = $5;
 }
 |	%empty	{
+	$$ = NULL;
 };
 
 lista_id : id_tk coma_tk lista_id	{
+	nuevaCelda($3, $1); 
+	$$ = $3;
 }
 |	id_tk	{
+	$$ = nuevaLista();
+	nuevaCelda($$, $1);
 };
 
 decl_ent_sal : decl_ent {

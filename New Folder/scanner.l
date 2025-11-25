@@ -7,7 +7,10 @@
 	#include <stdlib.h> //Para poder usar exit(), atof...
 	#include <string.h>
 	#include <stddef.h>
-	#include "parser.tab.h" // Cabecera que genera Bison
+	
+	#include "nombresDeTipos.h"    // Para NombreDeTipoT
+	#include "traducciones.h"      // Para tipoListaNombre
+	#include "parser.tab.h"        // Tokens de Bison
 	
 	void errorEnScanner(char*, char*);
 %}
@@ -121,11 +124,11 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	}
 }
 {literal_caracter_def}	{
-	printf("Literal caracter: %s\n", yytext);
+	yylval.car = yytext[1];
 	return literal_caracter_tk;
 }
 {literal_cadena_def}	{
-	printf("Literal cadena: %s\n", yytext);
+	yylval.cad = strdup(yytext);
 	return literal_cadena_tk;
 }
 {verdadero_def}	{
@@ -255,6 +258,7 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	return y_tk;
 }
 {comentario_def}	{
+	yylval.cad = strdup(yytext);
 	return comentario_tk;
 }
 {id_def}	{

@@ -4,8 +4,10 @@
 #include "tablaSimbolos.h"
 
 entradaTS* TS = NULL;
-int contadorTemp = 0;
+int contadorTemp = 0;   // para nombres temporales
+int contadorSID = 0;    // para asignar un sid único a cada entrada
 
+// Insertar un nuevo símbolo
 void insertarTS(char* nombre) {
     entradaTS* actual = TS;
     while (actual != NULL) {
@@ -17,17 +19,23 @@ void insertarTS(char* nombre) {
     }
 
     entradaTS* nuevo = malloc(sizeof(entradaTS));
+    if (!nuevo) {
+        printf("Error: sin memoria para nueva entradaTS\n");
+        exit(1);
+    }
     nuevo->nombre = strdup(nombre);
-    nuevo->tipo = NULL;     // tipo se pondrá después
+    nuevo->tipo = TIPO_INVALIDO; // enum
+    nuevo->sid = contadorSID++;   // asignar SID único
     nuevo->sig = TS;
     TS = nuevo;
 }
 
-void modificarTipoTS(char* nombre, char* tipo) {
+// Modificar tipo de un símbolo
+void modificarTipoTS(char* nombre, NombreDeTipoT tipo) {
     entradaTS* actual = TS;
     while (actual != NULL) {
         if (strcmp(actual->nombre, nombre) == 0) {
-            actual->tipo = strdup(tipo);
+            actual->tipo = tipo;
             return;
         }
         actual = actual->sig;
@@ -35,7 +43,9 @@ void modificarTipoTS(char* nombre, char* tipo) {
     printf("Error: identificador %s no encontrado.\n", nombre);
 }
 
-char* consultarTipoTS(char* nombre) {
+
+// Consultar tipo de un símbolo
+NombreDeTipoT consultarTipoTS(char* nombre) {
     entradaTS* actual = TS;
     while (actual != NULL) {
         if (strcmp(actual->nombre, nombre) == 0)
@@ -43,25 +53,45 @@ char* consultarTipoTS(char* nombre) {
         actual = actual->sig;
     }
     printf("Error: identificador %s no declarado.\n", nombre);
-    return NULL;
+    return TIPO_INVALIDO;
 }
 
+// Crear nuevo temporal
 char* newtemp() {
     char nombreTemp[20];
     sprintf(nombreTemp, "t%d", contadorTemp++);
-
     insertarTS(nombreTemp);
-    // tipo se asignará según operación (como dice la teoría)
+    // tipo se asignará después según la operación
     return strdup(nombreTemp);
 }
 
+// Imprimir tabla de símbolos
 void imprimirTS() {
     entradaTS* actual = TS;
     printf("\n===== TABLA DE SÍMBOLOS =====\n");
     while (actual != NULL) {
-        printf("%s : %s\n",
-               actual->nombre,
-               actual->tipo ? actual->tipo : "(sin tipo)");
+        const char* nombreTipo;
+        switch (actual->tipo) {
+            case BOOLEANO: 
+                nombreTipo = "booleano"; 
+                break;
+            case CADENA:   
+                nombreTipo = "cadena"; 
+                break;
+            case CARACTER: 
+                nombreTipo = "caracter"; 
+                break;
+            case ENTERO:   
+                nombreTipo = "entero"; 
+                break;
+            case REAL:     
+                nombreTipo = "real"; 
+                break;
+            default:       
+                nombreTipo = "(sin tipo)";
+        }
+
+        printf("SID %d - %s : %s\n", actual->sid, actual->nombre, nombreTipo);
         actual = actual->sig;
     }
     printf("=============================\n");

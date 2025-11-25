@@ -4,6 +4,8 @@ sal suma: entero;
 {Prec: n= N AND m = M AND M >= N >0}
 var
 i, comb: entero;
+r : real;
+c: caracter;
 fvar;
 i:= 0;
 suma:= 0;
