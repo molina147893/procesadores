@@ -11,6 +11,8 @@
 	#include "nombresDeTipos.h"    // Para NombreDeTipoT
 	#include "traducciones.h"      // Para tipoListaNombre
 	#include "parser.tab.h"        // Tokens de Bison
+	#include "operadores.h"
+	#include "cuadruplas.h"
 	
 	void errorEnScanner(char*, char*);
 %}
@@ -320,9 +322,11 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	return si_no_si_tk;
 }
 {op1_def}	{
+	yylval.op.operador = yytext[0];  //Guardamos si es + o -
 	return op1_tk;
 }
 {op2_def}	{
+	yylval.op.operador = yytext[0];  //Guardamos si es * o /
 	return op2_tk;
 }
 .	{

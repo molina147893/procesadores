@@ -7,6 +7,8 @@
 	#include "traducciones.h"      // Para tipoListaNombre
 	#include "tablaSimbolos.h"     // Para las rutinas de TS
 	#include "literal.h"
+	#include "operadores.h"		//Para poder saber el operador exacto
+	#include "cuadruplas.h"
 	
 	int yylex();
 	extern FILE* yyin;
@@ -24,6 +26,7 @@
     char* cad; // literal cadena
     NombreDeTipoT tipo;         // para d_tipo / tipo_base
     tipoListaNombre* lista; // para lista de ids
+    OpInfo op;	//Operador exacto
 }
 
 
@@ -110,6 +113,8 @@
 
 %type <tipo> d_tipo tipo_base
 %type <lista> lista_d_var lista_id
+%type <tipo> exp_a exp_b expresion operando_a operando_b literal_numerico
+%type <op> op_1_tk op_2_tk
 
 %%
 
@@ -284,8 +289,10 @@ exp_a : exp_a op1_tk exp_a	{
 
 //Literal numerico es entero y real?
 literal_numerico : literal_entero_tk	{
+	$$ = ENTERO;
 }
 |	literal_real_tk	{
+	$$ = REAL;
 };
 
 //oprel?? añadir al scanner mayor igual menor igual y distinto y juntarlos en comparadores
