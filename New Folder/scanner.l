@@ -176,6 +176,7 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	return dev_tk;
 }
 {div_def}	{
+	yylval.op.operador = yytext[0];
 	return div_mod_tk;
 }
 {ent_def}	{
@@ -236,6 +237,7 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	return hasta_tk;
 }
 {mod_def}	{
+	yylval.op.operador = yytext[0];
 	return div_mod_tk;
 }
 {no_def}	{

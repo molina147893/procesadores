@@ -17,7 +17,7 @@ typedef struct	{
 } TablaCuadruplas;
 
 TablaCuadruplas crearTabla(int capacidad);
-void insertarCuadrupla(TablaCuadruplas* t, char* op, char* arg1, char* arg2, char* resultado); //gen()
+void gen(TablaCuadruplas* t, char op, char* arg1, char* arg2, char* resultado); //gen()
 void liberarTabla(TablaCuadruplas* t);
 void imprimirTabla(TablaCuadruplas* t);
 

@@ -19,7 +19,7 @@ TablaCuadruplas crearTabla(int capacidad) {
 	return t;
 }
 
-void insertarCuadrupla(TablaCuadruplas* t, char* op, char* arg1, char* arg2, char* resultado){ //gen()
+void gen(TablaCuadruplas* t, char op, char* arg1, char* arg2, char* resultado){ //gen()
 	//Comprobamos si la tabla esta llena
 	if(t->n >= t->capacidad){
 		t->capacidad *= 2;

@@ -36,6 +36,7 @@
 %token <cad> literal_cadena_tk
 %token <booleano> verdadero_tk	// también podrías tratarlas como tokens sin valor y crear booleanos en el parser
 %token <booleano> falso_tk
+%token <op> op_1_tk op_2_tk div_mod_tk
 
 %token accion_tk
 %token faccion_tk
@@ -114,7 +115,7 @@
 %type <tipo> d_tipo tipo_base
 %type <lista> lista_d_var lista_id
 %type <tipo> exp_a exp_b expresion operando_a operando_b literal_numerico
-%type <op> op_1_tk op_2_tk
+
 
 %%
 
@@ -273,6 +274,33 @@ decl_salida : sal_tk lista_d_var	{
 
 //Literal numerico??
 exp_a : exp_a op1_tk exp_a	{
+	entradaTS* t = newtemp(); //Crear
+	insertarTemporal(&TS, t); //Crear
+	$$.place = t; //Crear
+	//Crear
+	if(($1.type == ENTERO) && ($3.type == ENTERO)){
+		modificarTipoTS(t, ENTERO);
+		
+		gen(&tQuad, $2.operador, $1.place->&nombre, $3.place->&nombre, $$.place->&nombre);
+		
+		$$.type = ENTERO;//crear
+	}
+	else{
+		modificarTipoTS(t, REAL);
+		$$.type = REAL;
+		
+		if(($1.type == ENTERO) && ($3.type == REAL)){
+			gen(&tQuad, /*Asignacion?*/ , $1.place->&nombre, /*nada?*/, t->&nombre);
+			gen(&tQuad, $2.operador, t.place->&nombre, $3.place->&nombre, $$.place->&nombre);
+		}
+		else if(($1.type == REAL) && ($3.type == ENTERO)){
+			gen(&tQuad, /*Asignacion?*/ , $3.place->&nombre, /*nada?*/, t->&nombre);
+			gen(&tQuad, $2.operador, $1.place->&nombre, t.place->&nombre, $$.place->&nombre);
+		}
+		else if(($1.type == REAL) && ($3.type == REAL)){
+			gen(&tQuad, $2.operador, $1.place->&nombre, $3.place->&nombre, $$.place->&nombre);
+		}
+	}
 }
 | 	exp_a op2_tk exp_a	{
 }
@@ -444,6 +472,7 @@ int main(int argc, char **argv){
 	else
 		yyin = stdin;
 	TS = NULL;       // Inicializa la TS
+	TablaCuadruplas tQuad = crearTabla(10);
 	yyparse();
 	imprimirTS();    // solo para debug
 }
