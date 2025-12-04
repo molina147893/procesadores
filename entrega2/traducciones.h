@@ -15,6 +15,15 @@ typedef struct tipoListaNombre {
     celdaListaNombre* ini;
 } tipoListaNombre;
 
+typedef struct {
+    char operador; // Guardamos que operador es exactamente
+} OpInfo;
+
+typedef struct {
+    int place;          // el SID en la TS
+    NombreDeTipoT type; // tipo de la expresión
+} AtributosExpA;
+
 // Constructor de lista vacía
 tipoListaNombre* nuevaLista();
 void nuevaCelda(tipoListaNombre* l, char* id);

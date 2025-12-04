@@ -42,7 +42,8 @@ void insertarNombre(tipoListaNombre* c, char* nombre) {
 void insertarListaEnTS(tipoListaNombre* l, NombreDeTipoT tipo) {
     celdaListaNombre* nodo = l->ini;
     while (nodo) {
-        insertarTS(nodo->nombre, tipo); // accion de tablaSimbolos
+        entradaTS* t = insertarTS(nodo->nombre); // Crear simbolo
+        modificarTipoTS(t, tipo);               // Asignar el tipo correcto
         nodo = nodo->sig;
     }
 }

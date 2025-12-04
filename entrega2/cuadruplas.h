@@ -4,20 +4,22 @@
 #include "tablaSimbolos.h"
 
 typedef struct {
-	char op[1];
-	char arg1[10]; 
-	char arg2[10];
-	char resultado[20];
+    char op;     // +, -, *, /, 'i' para int2real
+    int arg1;    // SID TS
+    int arg2;    // SID TS o -1 si no aplica
+    int resultado;     // SID TS donde se guarda resultado
 } Cuadrupla;
 
 typedef struct	{
-	Cuadrupla* cuadrupla;
-	int contador;
+	Cuadrupla* datos;
+	int n;
 	int capacidad; //Para no tener que hacer realloc cada vez que insertamos y solo hacerlo si se supera esta capacidad
 } TablaCuadruplas;
 
+extern TablaCuadruplas tQuad; // declaramos la variable global
+
 TablaCuadruplas crearTabla(int capacidad);
-void gen(TablaCuadruplas* t, char op, char* arg1, char* arg2, char* resultado); //gen()
+void gen(char op, int arg1, int arg2, int resultado);
 void liberarTabla(TablaCuadruplas* t);
 void imprimirTabla(TablaCuadruplas* t);
 

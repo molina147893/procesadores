@@ -11,7 +11,6 @@
 	#include "nombresDeTipos.h"    // Para NombreDeTipoT
 	#include "traducciones.h"      // Para tipoListaNombre
 	#include "parser.tab.h"        // Tokens de Bison
-	#include "operadores.h"
 	#include "cuadruplas.h"
 	
 	void errorEnScanner(char*, char*);

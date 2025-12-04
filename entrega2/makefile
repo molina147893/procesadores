@@ -1,7 +1,7 @@
 all: clean compile
 
-compile: flex bison lex tablaSimbolos traducciones
-	gcc parser.tab.c lex.yy.o tablaSimbolos.o traducciones.o -lfl -lm
+compile: flex bison lex tablaSimbolos traducciones cuadruplas
+	gcc parser.tab.c lex.yy.o tablaSimbolos.o traducciones.o cuadruplas.o -lfl -lm
 
 flex: scanner.l
 	flex scanner.l
@@ -17,6 +17,9 @@ tablaSimbolos:
 
 traducciones:
 	gcc -c traducciones.c
+	
+cuadruplas:
+	gcc -c cuadruplas.c
 
 clean:
 	rm -f lex.yy.c lex.yy.o
@@ -25,4 +28,5 @@ clean:
 	rm -f parser.output
 	rm -f tablaSimbolos.o
 	rm -f traducciones.o
+	rm -f cuadruplas.o
 

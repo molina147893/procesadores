@@ -7,7 +7,6 @@
 	#include "traducciones.h"      // Para tipoListaNombre
 	#include "tablaSimbolos.h"     // Para las rutinas de TS
 	#include "literal.h"
-	#include "operadores.h"		//Para poder saber el operador exacto
 	#include "cuadruplas.h"
 	
 	int yylex();
@@ -27,6 +26,7 @@
     NombreDeTipoT tipo;         // para d_tipo / tipo_base
     tipoListaNombre* lista; // para lista de ids
     OpInfo op;	//Operador exacto
+    AtributosExpA attr;
 }
 
 
@@ -36,7 +36,7 @@
 %token <cad> literal_cadena_tk
 %token <booleano> verdadero_tk	// también podrías tratarlas como tokens sin valor y crear booleanos en el parser
 %token <booleano> falso_tk
-%token <op> op_1_tk op_2_tk div_mod_tk
+%token <op> op1_tk op2_tk div_mod_tk
 
 %token accion_tk
 %token faccion_tk
@@ -100,21 +100,22 @@
 %token entonces_tk
 %token si_no_si_tk
 
-%token op1_tk
-%token op2_tk
-%token div_mod_tk
+//%token op1_tk
+//%token op2_tk
+//%token div_mod_tk
 %token oprel_tk
 
 
 %left o_tk y_tk
 %right no_tk
 %nonassoc oprel_tk //?
-%left op1_tk
-%left op2_tk div_mod_tk
+//%left op1_tk
+//%left op2_tk div_mod_tk
 
 %type <tipo> d_tipo tipo_base
 %type <lista> lista_d_var lista_id
-%type <tipo> exp_a exp_b expresion operando_a operando_b literal_numerico
+%type <tipo> exp_b expresion operando_a operando_b literal_numerico
+%type <attr> exp_a
 
 
 %%
@@ -274,31 +275,26 @@ decl_salida : sal_tk lista_d_var	{
 
 //Literal numerico??
 exp_a : exp_a op1_tk exp_a	{
-	entradaTS* t = newtemp(); //Crear
-	insertarTemporal(&TS, t); //Crear
-	$$.place = t; //Crear
-	//Crear
+	entradaTS* t = insertarTemp(); // Crear e insertar nuevo temporal
+	$$.place = t->sid; //Crear
 	if(($1.type == ENTERO) && ($3.type == ENTERO)){
 		modificarTipoTS(t, ENTERO);
-		
-		gen(&tQuad, $2.operador, $1.place->&nombre, $3.place->&nombre, $$.place->&nombre);
-		
+		gen($2.operador, $1.place, $3.place, $$.place);
 		$$.type = ENTERO;//crear
 	}
 	else{
 		modificarTipoTS(t, REAL);
 		$$.type = REAL;
-		
 		if(($1.type == ENTERO) && ($3.type == REAL)){
-			gen(&tQuad, /*Asignacion?*/ , $1.place->&nombre, /*nada?*/, t->&nombre);
-			gen(&tQuad, $2.operador, t.place->&nombre, $3.place->&nombre, $$.place->&nombre);
+			gen('i', $1.place, -1, $$.place);
+			gen($2.operador, $$.place, $3.place, $$.place);
 		}
 		else if(($1.type == REAL) && ($3.type == ENTERO)){
-			gen(&tQuad, /*Asignacion?*/ , $3.place->&nombre, /*nada?*/, t->&nombre);
-			gen(&tQuad, $2.operador, $1.place->&nombre, t.place->&nombre, $$.place->&nombre);
+			gen('i', $3.place, -1, $$.place);
+			gen($2.operador, $1.place, $$.place, $$.place);
 		}
 		else if(($1.type == REAL) && ($3.type == REAL)){
-			gen(&tQuad, $2.operador, $1.place->&nombre, $3.place->&nombre, $$.place->&nombre);
+			gen($2.operador, $1.place, $3.place, $$.place);
 		}
 	}
 }
@@ -472,7 +468,7 @@ int main(int argc, char **argv){
 	else
 		yyin = stdin;
 	TS = NULL;       // Inicializa la TS
-	TablaCuadruplas tQuad = crearTabla(10);
+	tQuad = crearTabla(10); // inicializa tabla global de cuadruplas
 	yyparse();
 	imprimirTS();    // solo para debug
 }

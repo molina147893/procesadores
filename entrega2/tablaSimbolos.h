@@ -12,10 +12,12 @@ typedef struct entradaTS {
 
 extern entradaTS* TS;
 
-void insertarTS(char* nombre, NombreDeTipoT tipo);
-
+entradaTS* insertarTS(char* nombre);        // crea símbolo normal
+entradaTS* insertarTemp();                  // crea temporal t0, t1, t2...
+entradaTS* buscarPorNombre(char* nombre);
+entradaTS* buscarPorSID(int sid);
+void modificarTipoTS(entradaTS* e, NombreDeTipoT tipo);
 NombreDeTipoT consultarTipoTS(char* nombre);
-
-void imprimirTS();                   // opcional
+void imprimirTS(); // opcional
 
 #endif

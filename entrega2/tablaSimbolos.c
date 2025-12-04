@@ -8,15 +8,12 @@ entradaTS* TS = NULL;
 int contadorTemp = 0;   // para nombres temporales
 int contadorSID = 0;    // para asignar un sid único a cada entrada
 
-// Insertar un nuevo símbolo
-void insertarTS(char* nombre, NombreDeTipoT tipo) {
-    entradaTS* actual = TS;
-    while (actual != NULL) {
-        if (strcmp(actual->nombre, nombre) == 0) {
-            printf("Error: identificador %s ya declarado.\n", nombre);
-            return;
-        }
-        actual = actual->sig;
+// INSERTAR NUEVO SIMBOLO
+entradaTS* insertarTS(char* nombre) {
+    entradaTS* existe = buscarPorNombre(nombre);
+    if (existe != NULL) {
+        printf("Error: identificador %s ya declarado.\n", nombre);
+        return existe;
     }
 
     entradaTS* nuevo = malloc(sizeof(entradaTS));
@@ -24,12 +21,28 @@ void insertarTS(char* nombre, NombreDeTipoT tipo) {
         printf("Error: sin memoria para nueva entradaTS\n");
         exit(1);
     }
-
     nuevo->nombre = strdup(nombre);
-    nuevo->tipo = tipo;            // ahora asignamos tipo directamente
+    nuevo->tipo = TIPO_INVALIDO;
     nuevo->sid = contadorSID++;    // SID consecutivo
     nuevo->sig = TS;               // insertar al principio
     TS = nuevo;
+    return nuevo;
+}
+
+
+// INSERTAR TEMPORAL
+entradaTS* insertarTemp() {
+    char buffer[32];
+    sprintf(buffer, "t%d", contadorTemp++);
+
+    entradaTS* nuevo = malloc(sizeof(entradaTS));
+    nuevo->nombre = strdup(buffer);
+    nuevo->tipo = TIPO_INVALIDO; // lo asignaremos despues
+    nuevo->sid = contadorTemp++;
+    nuevo->sig = TS;
+    TS = nuevo;
+
+    return nuevo;
 }
 
 
@@ -43,6 +56,35 @@ NombreDeTipoT consultarTipoTS(char* nombre) {
     }
     printf("Error: identificador %s no declarado.\n", nombre);
     return TIPO_INVALIDO;
+}
+
+// BUSQUEDAS
+entradaTS* buscarPorNombre(char* nombre) {
+    entradaTS* actual = TS;
+    while (actual) {
+        if (actual->nombre && strcmp(actual->nombre, nombre) == 0)
+            return actual;
+        actual = actual->sig;
+    }
+    return NULL;
+}
+
+entradaTS* buscarPorSID(int sid) {
+    entradaTS* actual = TS;
+    while (actual) {
+        if (actual->sid == sid)
+            return actual;
+        actual = actual->sig;
+    }
+    return NULL;
+}
+
+
+// TIPO
+void modificarTipoTS(entradaTS* e, NombreDeTipoT tipo) {
+    if (e){
+        e->tipo = tipo;
+    }
 }
 
 char* nombreTipo(NombreDeTipoT t) {
@@ -61,7 +103,7 @@ void imprimirTS() {
     entradaTS* actual = TS;
     printf("\n===== TABLA DE SÍMBOLOS =====\n");
     while (actual != NULL) {
-        printf("SID %d - %s : %s\n",
+        printf("SID: %d   Nombre: %s   Tipo: %s\n",
                actual->sid,
                actual->nombre,
                nombreTipo(actual->tipo)); // convierte enum → cadena
