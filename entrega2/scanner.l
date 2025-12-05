@@ -175,7 +175,7 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	return dev_tk;
 }
 {div_def}	{
-	yylval.op.operador = yytext[0];
+	yylval.op.operador = OP_DIV;
 	return div_mod_tk;
 }
 {ent_def}	{
@@ -236,7 +236,7 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	return hasta_tk;
 }
 {mod_def}	{
-	yylval.op.operador = yytext[0];
+	yylval.op.operador = OP_MOD;
 	return div_mod_tk;
 }
 {no_def}	{
@@ -296,18 +296,23 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	return dos_puntos_tk;
 }
 {mayor_que_def}	{
+	yylval.op.operador = OP_MAYQ;
 	return oprel_tk;
 }
 {menor_que_def}	{
+	yylval.op.operador = OP_MENQ;
 	return oprel_tk;
 }
 {mayor_igual_def}	{
+	yylval.op.operador = OP_MAYIQ;
 	return oprel_tk;
 }
 {menor_igual_def}	{
+	yylval.op.operador = OP_MENIQ;
 	return oprel_tk;
 }
 {distinto_def}	{
+	yylval.op.operador = OP_DIST;
 	return oprel_tk;
 }
 {subrango_def}	{
@@ -322,12 +327,22 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 {si_no_si_def}	{
 	return si_no_si_tk;
 }
-{op1_def}	{
-	yylval.op.operador = yytext[0];  //Guardamos si es + o -
+{op1_def}	{ //Guardamos si es + o -
+	if (yytext[0] == '+'){
+		yylval.op.operador = OP_SUM;
+	}
+	else if (yytext[0] == '-'){
+		yylval.op.operador = OP_SUM;
+	}
 	return op1_tk;
 }
-{op2_def}	{
-	yylval.op.operador = yytext[0];  //Guardamos si es * o /
+{op2_def}	{ //Guardamos si es * o /
+	if (yytext[0] == '*'){
+		yylval.op.operador = OP_MULT;
+	}
+	else if (yytext[0] == '/'){
+		yylval.op.operador = OP_DIV;
+	}
 	return op2_tk;
 }
 .	{

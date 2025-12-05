@@ -39,6 +39,7 @@ void insertarNombre(tipoListaNombre* c, char* nombre) {
     nuevaCelda(c, nombre);
 }
 
+// inserta la lista de declaraciones de variables
 void insertarListaEnTS(tipoListaNombre* l, NombreDeTipoT tipo) {
     celdaListaNombre* nodo = l->ini;
     while (nodo) {

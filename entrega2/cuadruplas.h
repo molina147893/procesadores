@@ -20,7 +20,7 @@ extern TablaCuadruplas tQuad; // declaramos la variable global
 
 TablaCuadruplas crearTabla(int capacidad);
 void gen(char op, int arg1, int arg2, int resultado);
-void liberarTabla(TablaCuadruplas* t);
-void imprimirTabla(TablaCuadruplas* t);
+void liberarTC(TablaCuadruplas* t);
+void imprimirTC(TablaCuadruplas* t);
 
 #endif

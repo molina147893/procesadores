@@ -40,14 +40,14 @@ void gen(char op, int arg1, int arg2, int resultado) {
 }
 
 
-void liberarTabla(TablaCuadruplas* t){
+void liberarTC(TablaCuadruplas* t){
 	free(t->datos);
 	t->datos = NULL;
 	t->n = 0;
 	t->capacidad = 0; //?
 }
 
-void imprimirTabla(TablaCuadruplas* t){
+void imprimirTC(TablaCuadruplas* t){
 	printf("\n===== TABLA DE CUADRUPLAS =====\n");
 	
 	for(int i = 0; i <= t->n; i++){

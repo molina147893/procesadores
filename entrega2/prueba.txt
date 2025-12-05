@@ -10,6 +10,9 @@ fvar;
 i:= 0;
 suma:= 0;
 comb:= m;
+n:= 1;
+m:= 2;
+n := n + m;
 mientras i <n hacer
 suma := suma + comb;
 comb := comb * (m - i -1) div (i + 2);
