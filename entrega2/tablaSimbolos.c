@@ -38,7 +38,7 @@ entradaTS* insertarTemp() {
     entradaTS* nuevo = malloc(sizeof(entradaTS));
     nuevo->nombre = strdup(buffer);
     nuevo->tipo = TIPO_INVALIDO; // lo asignaremos despues
-    nuevo->sid = contadorTemp++;
+    nuevo->sid = contadorSID++;
     nuevo->sig = TS;
     TS = nuevo;
 

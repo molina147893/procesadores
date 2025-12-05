@@ -20,7 +20,7 @@ TablaCuadruplas crearTabla(int capacidad) {
 	return t;
 }
 
-void gen(char op, int arg1, int arg2, int resultado) {
+void gen(int op, int arg1, int arg2, int resultado) {
 	//Comprobamos si la tabla esta llena
     if(tQuad.n >= tQuad.capacidad){
         tQuad.capacidad *= 2;
@@ -50,8 +50,8 @@ void liberarTC(TablaCuadruplas* t){
 void imprimirTC(TablaCuadruplas* t){
 	printf("\n===== TABLA DE CUADRUPLAS =====\n");
 	
-	for(int i = 0; i <= t->n; i++){
-		printf("CUADRUPLA %d: (%c, %d, %d, %d)\n", i, t->datos[i].op, t->datos[i].arg1, t->datos[i].arg2, t->datos[i].resultado);
+	for(int i = 0; i < t->n; i++){
+		printf("CUADRUPLA %d: (%d, %d, %d, %d)\n", i, t->datos[i].op, t->datos[i].arg1, t->datos[i].arg2, t->datos[i].resultado);
 	}
 	
 	printf("=============================\n");

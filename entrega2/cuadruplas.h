@@ -4,7 +4,7 @@
 #include "tablaSimbolos.h"
 
 typedef struct {
-    char op;     // +, -, *, /, 'i' para int2real
+    int op;     // +, -, *, /, 'i' para int2real
     int arg1;    // SID TS
     int arg2;    // SID TS o -1 si no aplica
     int resultado;     // SID TS donde se guarda resultado
@@ -19,7 +19,7 @@ typedef struct	{
 extern TablaCuadruplas tQuad; // declaramos la variable global
 
 TablaCuadruplas crearTabla(int capacidad);
-void gen(char op, int arg1, int arg2, int resultado);
+void gen(int op, int arg1, int arg2, int resultado);
 void liberarTC(TablaCuadruplas* t);
 void imprimirTC(TablaCuadruplas* t);
 

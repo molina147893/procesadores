@@ -332,7 +332,7 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 		yylval.op.operador = OP_SUM;
 	}
 	else if (yytext[0] == '-'){
-		yylval.op.operador = OP_SUM;
+		yylval.op.operador = OP_REST;
 	}
 	return op1_tk;
 }

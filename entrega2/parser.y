@@ -110,7 +110,7 @@
 %left o_tk y_tk
 %right no_tk
 %nonassoc oprel_tk //?
-//%left op1_tk
+%left op1_tk
 //%left op2_tk div_mod_tk
 
 %type <tipo> d_tipo tipo_base exp_b   operando_b 
@@ -286,11 +286,11 @@ exp_a : exp_a op1_tk exp_a	{
 			$$.type = REAL;
 			// SE PODRIA SACAR EL 2 GEN NO?
 			if(($1.type == ENTERO) && ($3.type == REAL)){
-				gen('i', $1.place, -1, $$.place); // hacer 'i' -> int to real
+				gen(1, $1.place, -1, $$.place); // hacer 1 -> int to real
 				gen($2.operador, $$.place, $3.place, $$.place);
 			}
 			else if(($1.type == REAL) && ($3.type == ENTERO)){
-				gen('i', $3.place, -1, $$.place); // hacer 'i' -> int to real
+				gen(1, $3.place, -1, $$.place); // hacer 1 -> int to real
 				gen($2.operador, $1.place, $$.place, $$.place);
 			}
 			else if(($1.type == REAL) && ($3.type == REAL)){
@@ -302,20 +302,26 @@ exp_a : exp_a op1_tk exp_a	{
 		entradaTS* t = insertarTemp();
 		$$.place = t->sid;
 		if(($1.type == ENTERO) && ($3.type == ENTERO)){
-			modificarTipoTS(t, ENTERO);
-			$$.type = ENTERO;
-			gen($2.operador, $1.place, $3.place, $$.place);
+			if($2.operador == OP_DIV){
+				printf("ERROR: Estas haciendo una division con tipos imposibles\n");
+				//exit(1); //No se si hay que hacer exit, igual no por que queremos ver todo el programa, quizas lo que seria correcto es tratar el error convirtiendo uno a real pero niidea
+			}
+			else{
+				modificarTipoTS(t, ENTERO);
+				$$.type = ENTERO;
+				gen($2.operador, $1.place, $3.place, $$.place);
+			}
 		}
 		else{
 			modificarTipoTS(t, REAL);
 			$$.type = REAL;
 			// SE PODRIA SACAR EL 2 GEN NO?
 			if(($1.type == ENTERO) && ($3.type == REAL)){
-				gen('i', $1.place, -1, $$.place); // hacer 'i' -> int to real
+				gen(1, $1.place, -1, $$.place); // hacer 1 -> int to real
 				gen($2.operador, $$.place, $3.place, $$.place);
 			}
 			else if(($1.type == REAL) && ($3.type == ENTERO)){
-				gen('i', $3.place, -1, $$.place); // hacer 'i' -> int to real
+				gen(1, $3.place, -1, $$.place); // hacer 1 -> int to real
 				gen($2.operador, $1.place, $$.place, $$.place);
 			}
 			else if(($1.type == REAL) && ($3.type == REAL)){
@@ -331,7 +337,8 @@ exp_a : exp_a op1_tk exp_a	{
 			$$.type = ENTERO;
 			gen($2.operador, $3.place, $1.place, $$.place);
 		}else{
-			printf("Estas haciendo un div o mod con tipos incompatibles\n");
+			printf("ERROR: Estas haciendo un div/mod con tipos incompatibles\n");
+			//exit(1);
 		}
 	}
 	| abrir_parentesis_tk exp_a cerrar_parentesis_tk{
@@ -339,8 +346,18 @@ exp_a : exp_a op1_tk exp_a	{
 		$$.type  = $2.type;
 	}
 	| operando_a	{
+		if(($1.type == ENTERO) || ($1.type == REAL)){ //Verificamos que sea del tipo permitido por las operaciones aritmeticas
+			$$.type = $1.type;
+			$$.place = $1.place;
+		}
+		else{
+			printf("ERROR: Tipo no permitido en operaciones aritmeticas\n");
+			//exit(1);
+		}
 	}
-	| literal_numerico	{
+	| literal_numerico	{	//Esto supongo que es asi
+		$$.type = $1.type;
+		$$.place = $1.place;
 	}
 	| op1_tk exp_a	{
 		if ($1.operador != OP_REST) {
@@ -351,7 +368,7 @@ exp_a : exp_a op1_tk exp_a	{
 		$$.place = t->sid;
 		modificarTipoTS(t, $2.type);
 		$$.type = $2.type;
-		gen('u', $2.place, -1, $$.place); // HACER 'u' = negación unaria
+		gen($1.operador, $2.place, -1, $$.place); // HACER resta = negación unaria
 	};
 
 //Literal numerico: van directos a las cuadruplas
@@ -401,6 +418,7 @@ operando_a : id_tk	{
 		}
 		$$.place = t->sid;
 		$$.type  = t->tipo;
+		t = NULL; //?
 	}
 	|	operando_a punto_tk operando_a	{
 	}
