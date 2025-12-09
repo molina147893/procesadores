@@ -97,7 +97,7 @@
 //%token mayor_que_tk
 //%token menor_que_tk
 %token subrango_tk
-%token asignacion_tk
+%token <op> asignacion_tk
 %token entonces_tk
 %token si_no_si_tk
 
@@ -111,7 +111,7 @@
 %right no_tk
 %nonassoc oprel_tk //?
 %left op1_tk
-//%left op2_tk div_mod_tk
+%left op2_tk div_mod_tk
 
 %type <tipo> d_tipo tipo_base exp_b   operando_b 
 %type <lista> lista_d_var lista_id
@@ -279,7 +279,7 @@ exp_a : exp_a op1_tk exp_a	{
 		if(($1.type == ENTERO) && ($3.type == ENTERO)){
 			modificarTipoTS(t, ENTERO);
 			$$.type = ENTERO;
-			gen($2.operador, $1.place, $3.place, $$.place);
+			gen($2.operador, $3.place, $1.place, $$.place);
 		}
 		else{
 			modificarTipoTS(t, REAL);
@@ -304,7 +304,7 @@ exp_a : exp_a op1_tk exp_a	{
 		if(($1.type == ENTERO) && ($3.type == ENTERO)){
 			if($2.operador == OP_DIV){
 				printf("ERROR: Estas haciendo una division con tipos imposibles\n");
-				//exit(1); //No se si hay que hacer exit, igual no por que queremos ver todo el programa, quizas lo que seria correcto es tratar el error convirtiendo uno a real pero niidea
+
 			}
 			else{
 				modificarTipoTS(t, ENTERO);
@@ -338,7 +338,7 @@ exp_a : exp_a op1_tk exp_a	{
 			gen($2.operador, $3.place, $1.place, $$.place);
 		}else{
 			printf("ERROR: Estas haciendo un div/mod con tipos incompatibles\n");
-			//exit(1);
+
 		}
 	}
 	| abrir_parentesis_tk exp_a cerrar_parentesis_tk{
@@ -352,7 +352,7 @@ exp_a : exp_a op1_tk exp_a	{
 		}
 		else{
 			printf("ERROR: Tipo no permitido en operaciones aritmeticas\n");
-			//exit(1);
+
 		}
 	}
 	| literal_numerico	{	//Esto supongo que es asi
@@ -362,7 +362,6 @@ exp_a : exp_a op1_tk exp_a	{
 	| op1_tk exp_a	{
 		if ($1.operador != OP_REST) {
 			printf("Error: operador unario no soportado\n");
-			exit(1);
 		}
 		entradaTS* t = insertarTemp();
 		$$.place = t->sid;
@@ -376,9 +375,14 @@ literal_numerico : literal_entero_tk	{
         $$.place = $1;
         $$.type  = ENTERO;
         $$.esLiteral = 1; 
+        /*entradaTS* t = insertarTemp();
+        $$.place = t->sid;
+        $$.type = ENTERO;
+        modificarTipoTS(t, ENTERO);
+        $$.val = */
 	}
 	|literal_real_tk{
-		$$.place = $1;
+	$$.place = $1;
         $$.type  = REAL;
         $$.esLiteral = 1;
 	};
@@ -460,6 +464,7 @@ instrucciones : instruccion punto_coma_tk instrucciones	{
 instruccion : continuar_tk	{
 	}
 	|	asignacion	{
+		
 	}
 	|	alternativa	{
 	}
@@ -469,6 +474,21 @@ instruccion : continuar_tk	{
 	};
 
 asignacion : operando_a asignacion_tk expresion	{
+		if($1.type == $3.type){
+			gen($2.operador, $3.place, -1, $1.place);
+		}
+		else if($1.type == REAL && $3.type == ENTERO){
+			entradaTS* t = insertarTemp();
+			modificarTipoTS(t, $1.type);
+			gen($2.operador, $3.place, -1, t->sid);
+			gen($2.operador, t->sid, -1, $1.place);
+		}
+		else if($1.type == ENTERO && $3.type == REAL){
+			printf("ERROR: Asignacion con tipos incorrectos\n");
+		}
+		else{
+			printf("ERROR: Valores incompatibles en asignacion\n");
+		}
 	}
 	|	operando_b asignacion_tk expresion	{
 	};

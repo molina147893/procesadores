@@ -319,6 +319,7 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 	return subrango_tk;
 }
 {asignacion_def}	{
+	yylval.op.operador = OP_ASIG;
 	return asignacion_tk;
 }
 {entonces_def}	{

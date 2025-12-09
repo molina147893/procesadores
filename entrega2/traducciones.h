@@ -18,7 +18,7 @@ typedef enum {
     OP_MENQ,     // <
     OP_MAYIQ,     // >=
     OP_MENIQ,     // <=
-    OP_IGU,     // =
+    OP_IGU,     // ==
     OP_DIST      // <>
 } Operador;
 
