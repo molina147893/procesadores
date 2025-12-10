@@ -28,6 +28,7 @@
     tipoListaNombre* lista; // para lista de ids
     OpInfo op;	//Operador exacto
     AtributosExpresion atr; // atributos .place .type y .esLiteral
+    AuxM auxM;
 }
 
 
@@ -81,7 +82,7 @@
 %token y_tk
 %token <cad> comentario_tk
 %token <cad> id_tk
-%token id_bool_tk //b mayus/minus seguido de lo que sea
+%token <cad>id_bool_tk //b mayus/minus seguido de lo que sea
 //%token comillas_dobles_tk
 //%token comilla_simple_tk
 //%token barra_lateral_tk
@@ -104,7 +105,7 @@
 //%token op1_tk
 //%token op2_tk
 //%token div_mod_tk
-%token oprel_tk
+%token <op> oprel_tk
 
 
 %left o_tk y_tk
@@ -113,9 +114,11 @@
 %left op1_tk
 %left op2_tk div_mod_tk
 
-%type <tipo> d_tipo tipo_base exp_b   operando_b 
+%type <tipo> d_tipo tipo_base
 %type <lista> lista_d_var lista_id
 %type <atr> expresion exp_a operando_a literal_numerico
+%type <atr> exp_b operando_b 
+%type <auxM> M
 
 
 %%
@@ -388,28 +391,50 @@ literal_numerico : literal_entero_tk	{
 	};
 
 //oprel?? añadir al scanner mayor igual menor igual y distinto y juntarlos en comparadores
-exp_b : exp_b y_tk exp_b {
+exp_b : exp_b y_tk M exp_b {
+	backpatch($1.TRUE, $3.QUAD);
+	$$.TRUE = $4.TRUE;
+	$$.FALSE = merge($1.FALSE, $4.FALSE);
 	}
-	| exp_b o_tk exp_b {
+	| exp_b o_tk M exp_b {
+	backpatch($1.FALSE, $3.QUAD);
+	$$.TRUE = merge($1.TRUE, $4.TRUE);
+	$$.FALSE = $4.FALSE;
 	}
 	| no_tk exp_b {
+	$$.FALSE = $2.TRUE;
+	$$.TRUE = $2.FALSE;
 	}
 	| operando_b {
 	}
 	| verdadero_tk {
+	
 	}
 	| falso_tk {
 	}
 	| expresion oprel_tk expresion {
+	$$.TRUE = makelist(nextQuad()); // Supongo que nextQuad tiene que devolver un entero
+	$$.FALSE = makelist(nextQuad()+1); // Para coger la siguiente cuadrupla +1 ?
+	gen($2.operador, $1.place, $3.place, 0);
+	gen(GOTO, 0, 0, 0); //Los 0 puede ser que no esten bien
 	}
 	| abrir_parentesis_tk exp_b cerrar_parentesis_tk {
+	$$.TRUE = $2.TRUE;
+	$$.FALSE = $2.FALSE;
 	};
+
+M : %empty 	{
+	$$.QUAD = nextQuad();
+};
 
 expresion : exp_a	{
 		$$.type = $1.type;
 		$$.place = $1.place;
 	}
 	|	exp_b	{
+	$$.type = BOOLEANO;
+	$$.TRUE = $1.TRUE;
+	$$.FALSE = $1.FALSE;
 	}
 	|	funcion_ll	{
 	};
@@ -418,7 +443,6 @@ operando_a : id_tk	{
 		entradaTS* t = buscarPorNombre($1);
 		if (!t) {
 			printf("Error: variable %s no declarada\n", $1);
-			exit(1);
 		}
 		$$.place = t->sid;
 		$$.type  = t->tipo;
@@ -432,6 +456,25 @@ operando_a : id_tk	{
 	};
 
 operando_b : id_bool_tk	{
+	entradaTS* t = buscarPorNombre($1);
+	if(!t){
+		printf("ERROR: variable %s no declarada\n", $1);
+	}
+	
+	$$.type = BOOLEANO;
+	
+	$$.TRUE = makelist(nextQuad());
+	$$.FALSE = makelist(nextQuad()+1);
+	
+	gen(OP_IF_TRUE, t->sid, 0, 0); //De nuevo, no se si los 0 estan bien
+	gen(GOTO, 0, 0, 0);
+	
+	t = NULL;
+	
+	/*$$.place = t->sid;
+	$$.type  = t->tipo;
+	t = NULL; */ //?
+	 
 	}
 	|	operando_b punto_tk operando_b	{
 	}
