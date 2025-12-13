@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "cuadruplas.h"
+#include "traducciones.h"
 
 TablaCuadruplas tQuad; // definición de la variable global
 
@@ -47,11 +48,34 @@ void liberarTC(TablaCuadruplas* t){
 	t->capacidad = 0; //?
 }
 
+char* nombreOperador(Operador o) {
+    switch (o) {
+		case OP_ASIG: return ":=";
+        case OP_SUM: return "+";
+        case OP_REST: return "-";
+        case OP_MULT: return "*";
+        case OP_DIV: return "div";
+		case OP_IDIV: return "/";
+		case OP_MOD: return "mod";
+		case OP_INT2REAL: return "int2real";
+		case OP_MAYQ: return ">";
+		case OP_MENQ: return "<";
+		case OP_MAYIQ: return ">=";
+		case OP_MENIQ: return "<=";
+		case OP_IGU: return "==";
+		case OP_DIST: return "<>";
+		case OP_IF_TRUE: return "ifTrue";
+		case GOTO: return "goto";
+        default: return "invalido";
+    }
+}
+
+
 void imprimirTC(TablaCuadruplas* t){
 	printf("\n===== TABLA DE CUADRUPLAS =====\n");
 	
 	for(int i = 0; i < t->n; i++){
-		printf("CUADRUPLA %d: (%d, %d, %d, %d)\n", i, t->datos[i].op, t->datos[i].arg1, t->datos[i].arg2, t->datos[i].resultado);
+		printf("CUADRUPLA %d: (%s, %d, %d, %d)\n", i, nombreOperador(t->datos[i].op), t->datos[i].arg1, t->datos[i].arg2, t->datos[i].resultado);
 	}
 	
 	printf("=============================\n");

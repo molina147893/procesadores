@@ -59,3 +59,19 @@ void liberarListaNombre(tipoListaNombre* l) {
     }
     free(l);
 }
+
+TablaCuadruplas makelist(int id){
+    
+}
+
+TablaCuadruplas merge(TablaCuadruplas t1, TablaCuadruplas t2){
+    
+}
+
+void backpatch(TablaCuadruplas t, int id){
+    
+}
+
+int nextQuad(){
+    
+}

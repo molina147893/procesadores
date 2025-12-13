@@ -126,362 +126,356 @@
 //ProAlg
 
 desc_algoritmo : algoritmo_tk id_tk punto_coma_tk cabecera_alg bloque_alg falgoritmo_tk punto_tk	{
-	};
+};
 
 cabecera_alg : decl_globales decl_a_f decl_ent_sal comentario_tk	{
-	};
+};
 
 bloque_alg : bloque comentario_tk	{
-	};
+};
 
 decl_globales : declaracion_tipo decl_globales	{
-	}
-	|	declaracion_const decl_globales	{
-	}
-	|	%empty	{
-	};
+}
+|	declaracion_const decl_globales	{
+}
+|	%empty	{
+};
 
 decl_a_f : accion_d decl_a_f	{
-	}
-	|	funcion_d decl_a_f	{
-	}
-	|	%empty	{
-	};
+}
+|	funcion_d decl_a_f	{
+}
+|	%empty	{
+};
 
 bloque : declaraciones instrucciones	{
-	};
+};
 
 declaraciones : declaracion_tipo declaraciones	{
-	}
-	|	declaracion_const declaraciones	{
-	}
-	|	declaracion_var declaraciones	{
-	}
-	|	%empty	{
-	};
+}
+|	declaracion_const declaraciones	{
+}
+|	declaracion_var declaraciones	{
+}
+|	%empty	{
+};
 
 
 //DECLARACIONES
 
 
 declaracion_tipo : tipo_tk lista_d_tipo ftipo_tk punto_coma_tk	{
-	};
+};
 
 declaracion_const : const_tk lista_d_cte fconst_tk punto_coma_tk	{
-	};
+};
 
 declaracion_var : var_tk lista_d_var fvar_tk punto_coma_tk	{
-	};
+};
 
 //Declaraciones: Tipos
 
 lista_d_tipo : id_tk igual_tk d_tipo punto_coma_tk lista_d_tipo	{
-	}
-	|	%empty	{
-	};
+}
+|	%empty	{
+};
 
 d_tipo : tupla_tk lista_campos ftupla_tk	{
-	}
-	|	tabla_tk inicio_array_tk expresion_t subrango_tk expresion_t fin_array_tk de_tk d_tipo	{
-	}
-	| id_tk	{
-	}
-	|	expresion_t subrango_tk expresion_t	{
-	}
-	|	ref_tk d_tipo	{
-	}
-	|	tipo_base	{
-		$$ = $1;
-	};
+}
+| tabla_tk inicio_array_tk expresion_t subrango_tk expresion_t fin_array_tk de_tk d_tipo	{
+}
+| id_tk	{
+}
+| expresion_t subrango_tk expresion_t	{
+}
+| ref_tk d_tipo	{
+}
+| tipo_base	{
+	$$ = $1;
+};
 
 //Esto lo hemos añadido nosotros, esta bien o hay que meterlo directamente en lista_d_tipo
 tipo_base : entero_tk { 
-		$$ = ENTERO; 
-	}
-	| real_tk    { 
-		$$ = REAL; 
-	}
-	| booleano_tk { 
-		$$ = BOOLEANO; 
-	}
-	| cadena_tk  { 
-		$$ = CADENA; 
-	}
-	| caracter_tk { 
-		$$ = CARACTER; 
-	};
+	$$ = ENTERO; 
+}
+| real_tk    { 
+	$$ = REAL; 
+}
+| booleano_tk { 
+	$$ = BOOLEANO; 
+}
+| cadena_tk  { 
+	$$ = CADENA; 
+}
+| caracter_tk { 
+	$$ = CARACTER; 
+};
 
 expresion_t : expresion	{
-	}
-	|	literal_caracter_tk	{
-	};
+}
+| literal_caracter_tk	{
+};
 
 lista_campos : id_tk dos_puntos_tk d_tipo punto_coma_tk lista_campos	{
-	}
-	|	%empty	{
-	};
+}
+| %empty	{
+};
 
 //Declaraciones: Constantes y Variables
 
 lista_d_cte : id_tk igual_tk literal punto_coma_tk lista_d_cte	{
-	}
-	|	%empty	{
-	}; //En algunas instalaciones de bison puede no reconocer, cambiar por un comentario del tipo /*empty*/ seria correcto
+}
+|	%empty	{
+}; //En algunas instalaciones de bison puede no reconocer, cambiar por un comentario del tipo /*empty*/ seria correcto
 
 //Verdadero y falso correcto?
 literal : literal_entero_tk	{
-	}
-	|	literal_real_tk	{
-	}
-	|	verdadero_tk	{
-	}
-	|	falso_tk	{
-	}
-	|	literal_cadena_tk	{
-	}
-	|	literal_caracter_tk	{
-	};
+}
+| literal_real_tk	{
+}
+| verdadero_tk	{
+}
+| falso_tk	{
+}
+| literal_cadena_tk	{
+}
+| literal_caracter_tk	{
+};
 
 lista_d_var : lista_id dos_puntos_tk d_tipo punto_coma_tk lista_d_var{
-		insertarListaEnTS($1, $3); 
-		liberarListaNombre($1); 
-		$$ = $5;
-	}
-	|%empty	{
-		$$ = NULL;
-	};
+	insertarListaEnTS($1, $3); 
+	liberarListaNombre($1); 
+	$$ = $5;
+}
+|%empty	{
+	$$ = NULL;
+};
 
 lista_id : id_tk coma_tk lista_id	{
-		nuevaCelda($3, $1); 
-		$$ = $3;
-	}
-	|	id_tk	{
-		$$ = nuevaLista();
-		nuevaCelda($$, $1);
-	};
+	nuevaCelda($3, $1); 
+	$$ = $3;
+}
+| id_tk	{
+	$$ = nuevaLista();
+	nuevaCelda($$, $1);
+};
 
 decl_ent_sal : decl_ent {
-	}
-	|	decl_ent decl_salida	{
-	}
-	| decl_salida	{
-	};
+}
+| decl_ent decl_salida	{
+}
+| decl_salida	{
+};
 
 decl_ent : ent_tk lista_d_var	{
-	};
+};
 
 decl_salida : sal_tk lista_d_var	{
-	};
+};
 
 
 //EXPRESIONES
 
 exp_a : exp_a op1_tk exp_a	{
-		entradaTS* t = insertarTemp(); // Crear e insertar nuevo temporal
-		$$.place = t->sid;
-		if(($1.type == ENTERO) && ($3.type == ENTERO)){
+	entradaTS* t = insertarTemp(); // Crear e insertar nuevo temporal
+	$$.place = t->sid;
+	if(($1.type == ENTERO) && ($3.type == ENTERO)){
+		modificarTipoTS(t, ENTERO);
+		$$.type = ENTERO;
+		gen($2.operador, $3.place, $1.place, $$.place);
+	}
+	else{
+		modificarTipoTS(t, REAL);
+		$$.type = REAL;
+		if(($1.type == ENTERO) && ($3.type == REAL)){
+			gen(OP_INT2REAL, $1.place, -1, $$.place);
+			gen($2.operador, $$.place, $3.place, $$.place);
+		}
+		else if(($1.type == REAL) && ($3.type == ENTERO)){
+			gen(OP_INT2REAL, $3.place, -1, $$.place);
+			gen($2.operador, $1.place, $$.place, $$.place);
+		}
+		else if(($1.type == REAL) && ($3.type == REAL)){
+			gen($2.operador, $1.place, $3.place, $$.place);
+		}
+	}
+}
+| exp_a op2_tk exp_a{
+	entradaTS* t = insertarTemp();
+	$$.place = t->sid;
+	if(($1.type == ENTERO) && ($3.type == ENTERO)){
+		if($2.operador == OP_DIV){
+			printf("ERROR: Estas haciendo una division con tipos imposibles\n");
+		}
+		else{
 			modificarTipoTS(t, ENTERO);
 			$$.type = ENTERO;
-			gen($2.operador, $3.place, $1.place, $$.place);
-		}
-		else{
-			modificarTipoTS(t, REAL);
-			$$.type = REAL;
-			// SE PODRIA SACAR EL 2 GEN NO?
-			if(($1.type == ENTERO) && ($3.type == REAL)){
-				gen(1, $1.place, -1, $$.place); // hacer 1 -> int to real
-				gen($2.operador, $$.place, $3.place, $$.place);
-			}
-			else if(($1.type == REAL) && ($3.type == ENTERO)){
-				gen(1, $3.place, -1, $$.place); // hacer 1 -> int to real
-				gen($2.operador, $1.place, $$.place, $$.place);
-			}
-			else if(($1.type == REAL) && ($3.type == REAL)){
-				gen($2.operador, $1.place, $3.place, $$.place);
-			}
+			gen($2.operador, $1.place, $3.place, $$.place);
 		}
 	}
-	| exp_a op2_tk exp_a{
-		entradaTS* t = insertarTemp();
-		$$.place = t->sid;
-		if(($1.type == ENTERO) && ($3.type == ENTERO)){
-			if($2.operador == OP_DIV){
-				printf("ERROR: Estas haciendo una division con tipos imposibles\n");
-
-			}
-			else{
-				modificarTipoTS(t, ENTERO);
-				$$.type = ENTERO;
-				gen($2.operador, $1.place, $3.place, $$.place);
-			}
+	else{
+		modificarTipoTS(t, REAL);
+		$$.type = REAL;
+		if(($1.type == ENTERO) && ($3.type == REAL)){
+			gen(OP_INT2REAL, $1.place, -1, $$.place);
+			gen($2.operador, $$.place, $3.place, $$.place);
 		}
-		else{
-			modificarTipoTS(t, REAL);
-			$$.type = REAL;
-			// SE PODRIA SACAR EL 2 GEN NO?
-			if(($1.type == ENTERO) && ($3.type == REAL)){
-				gen(1, $1.place, -1, $$.place); // hacer 1 -> int to real
-				gen($2.operador, $$.place, $3.place, $$.place);
-			}
-			else if(($1.type == REAL) && ($3.type == ENTERO)){
-				gen(1, $3.place, -1, $$.place); // hacer 1 -> int to real
-				gen($2.operador, $1.place, $$.place, $$.place);
-			}
-			else if(($1.type == REAL) && ($3.type == REAL)){
-				gen($2.operador, $1.place, $3.place, $$.place);
-			}
+		else if(($1.type == REAL) && ($3.type == ENTERO)){
+			gen(OP_INT2REAL, $3.place, -1, $$.place);
+			gen($2.operador, $1.place, $$.place, $$.place);
+		}
+		else if(($1.type == REAL) && ($3.type == REAL)){
+			gen($2.operador, $1.place, $3.place, $$.place);
 		}
 	}
-	| exp_a div_mod_tk exp_a{
-		entradaTS* t = insertarTemp();
-		$$.place = t->sid;
-		if(($1.type == ENTERO) && ($3.type == ENTERO)){
-			modificarTipoTS(t,ENTERO);
-			$$.type = ENTERO;
-			gen($2.operador, $3.place, $1.place, $$.place);
-		}else{
-			printf("ERROR: Estas haciendo un div/mod con tipos incompatibles\n");
-
-		}
+}
+| exp_a div_mod_tk exp_a{
+	entradaTS* t = insertarTemp();
+	$$.place = t->sid;
+	if(($1.type == ENTERO) && ($3.type == ENTERO)){
+		modificarTipoTS(t,ENTERO);
+		$$.type = ENTERO;
+		gen($2.operador, $3.place, $1.place, $$.place);
+	}else{
+		printf("ERROR: Estas haciendo un div/mod con tipos incompatibles\n");
 	}
-	| abrir_parentesis_tk exp_a cerrar_parentesis_tk{
-		$$.place = $2.place;
-		$$.type  = $2.type;
-	}
-	| operando_a	{
-		if(($1.type == ENTERO) || ($1.type == REAL)){ //Verificamos que sea del tipo permitido por las operaciones aritmeticas
-			$$.type = $1.type;
-			$$.place = $1.place;
-		}
-		else{
-			printf("ERROR: Tipo no permitido en operaciones aritmeticas\n");
-
-		}
-	}
-	| literal_numerico	{	//Esto supongo que es asi
+}
+| abrir_parentesis_tk exp_a cerrar_parentesis_tk{
+	$$.place = $2.place;
+	$$.type  = $2.type;
+}
+| operando_a	{
+	if(($1.type == ENTERO) || ($1.type == REAL)){ //Verificamos que sea del tipo permitido por las operaciones aritmeticas
 		$$.type = $1.type;
 		$$.place = $1.place;
 	}
-	| op1_tk exp_a	{
-		if ($1.operador != OP_REST) {
-			printf("Error: operador unario no soportado\n");
-		}
-		entradaTS* t = insertarTemp();
-		$$.place = t->sid;
-		modificarTipoTS(t, $2.type);
-		$$.type = $2.type;
-		gen($1.operador, $2.place, -1, $$.place); // HACER resta = negación unaria
-	};
+	else{
+		printf("ERROR: Tipo no permitido en operaciones aritmeticas\n");
+	}
+}
+| literal_numerico	{	//Esto supongo que es asi
+	$$.type = $1.type;
+	$$.place = $1.place;
+}
+| op1_tk exp_a	{
+	if ($1.operador != OP_REST) {
+		printf("Error: operador unario no soportado\n");
+	}
+	entradaTS* t = insertarTemp();
+	$$.place = t->sid;
+	modificarTipoTS(t, $2.type);
+	$$.type = $2.type;
+	gen($1.operador, $2.place, -1, $$.place); // HACER resta = negación unaria
+};
 
 //Literal numerico: van directos a las cuadruplas
 literal_numerico : literal_entero_tk	{
-        $$.place = $1;
-        $$.type  = ENTERO;
-        $$.esLiteral = 1; 
-        /*entradaTS* t = insertarTemp();
-        $$.place = t->sid;
-        $$.type = ENTERO;
-        modificarTipoTS(t, ENTERO);
-        $$.val = */
-	}
-	|literal_real_tk{
 	$$.place = $1;
-        $$.type  = REAL;
-        $$.esLiteral = 1;
-	};
+	$$.type  = ENTERO;
+	$$.esLiteral = 1; 
+	/*entradaTS* t = insertarTemp();
+	$$.place = t->sid;
+	$$.type = ENTERO;
+	modificarTipoTS(t, ENTERO);
+	$$.val = */
+}
+|literal_real_tk{
+	$$.place = $1;
+	$$.type  = REAL;
+	$$.esLiteral = 1;
+};
 
 //oprel?? añadir al scanner mayor igual menor igual y distinto y juntarlos en comparadores
 exp_b : exp_b y_tk M exp_b {
 	backpatch($1.TRUE, $3.QUAD);
 	$$.TRUE = $4.TRUE;
 	$$.FALSE = merge($1.FALSE, $4.FALSE);
-	}
-	| exp_b o_tk M exp_b {
+}
+| exp_b o_tk M exp_b {
 	backpatch($1.FALSE, $3.QUAD);
 	$$.TRUE = merge($1.TRUE, $4.TRUE);
 	$$.FALSE = $4.FALSE;
-	}
-	| no_tk exp_b {
+}
+| no_tk exp_b {
 	$$.FALSE = $2.TRUE;
 	$$.TRUE = $2.FALSE;
-	}
-	| operando_b {
-	}
-	| verdadero_tk {
+}
+| operando_b {
+	$$.TRUE = $1.TRUE;
+	$$.FALSE = $1.FALSE;
+}
+| verdadero_tk {
+}
+| falso_tk {
+}
+| expresion oprel_tk expresion {
+	// $$.TRUE = makelist(nextQuad()); // Supongo que nextQuad tiene que devolver un entero
+	// $$.FALSE = makelist(nextQuad()+1); // Para coger la siguiente cuadrupla +1 ?
+	// gen($2.operador, $1.place, $3.place, 0);
 	
-	}
-	| falso_tk {
-	}
-	| expresion oprel_tk expresion {
-	$$.TRUE = makelist(nextQuad()); // Supongo que nextQuad tiene que devolver un entero
-	$$.FALSE = makelist(nextQuad()+1); // Para coger la siguiente cuadrupla +1 ?
-	gen($2.operador, $1.place, $3.place, 0);
-	gen(GOTO, 0, 0, 0); //Los 0 puede ser que no esten bien
-	}
-	| abrir_parentesis_tk exp_b cerrar_parentesis_tk {
+	int qTrue = nextQuad();
+	gen($2.operador, $1.place, $3.place, 0); // salto condicional
+	int qFalse = nextQuad();
+	gen(GOTO, 0, 0, 0); // salto incondicional
+	$$.TRUE  = makelist(qTrue);
+	$$.FALSE = makelist(qFalse);
+}
+| abrir_parentesis_tk exp_b cerrar_parentesis_tk {
 	$$.TRUE = $2.TRUE;
 	$$.FALSE = $2.FALSE;
-	};
+};
 
 M : %empty 	{
 	$$.QUAD = nextQuad();
 };
 
 expresion : exp_a	{
-		$$.type = $1.type;
-		$$.place = $1.place;
-	}
-	|	exp_b	{
+	$$.type = $1.type;
+	$$.place = $1.place;
+}
+| exp_b	{
 	$$.type = BOOLEANO;
 	$$.TRUE = $1.TRUE;
 	$$.FALSE = $1.FALSE;
-	}
-	|	funcion_ll	{
-	};
+}
+| funcion_ll	{
+};
 
 operando_a : id_tk	{
-		entradaTS* t = buscarPorNombre($1);
-		if (!t) {
-			printf("Error: variable %s no declarada\n", $1);
-		}
-		$$.place = t->sid;
-		$$.type  = t->tipo;
-		t = NULL; //?
+	entradaTS* t = buscarPorNombre($1);
+	if (!t) {
+		printf("Error: variable %s no declarada\n", $1);
 	}
-	|	operando_a punto_tk operando_a	{
-	}
-	|	operando_a inicio_array_tk expresion fin_array_tk	{
-	}
-	|	operando_a ref_tk	{
-	};
+	$$.place = t->sid;
+	$$.type  = t->tipo;
+	t = NULL; //?
+}
+| operando_a punto_tk operando_a	{
+}
+| operando_a inicio_array_tk expresion fin_array_tk	{
+}
+| operando_a ref_tk	{
+};
 
 operando_b : id_bool_tk	{
 	entradaTS* t = buscarPorNombre($1);
 	if(!t){
 		printf("ERROR: variable %s no declarada\n", $1);
 	}
-	
 	$$.type = BOOLEANO;
-	
-	$$.TRUE = makelist(nextQuad());
-	$$.FALSE = makelist(nextQuad()+1);
-	
-	gen(OP_IF_TRUE, t->sid, 0, 0); //De nuevo, no se si los 0 estan bien
-	gen(GOTO, 0, 0, 0);
-	
-	t = NULL;
-	
-	/*$$.place = t->sid;
-	$$.type  = t->tipo;
-	t = NULL; */ //?
-	 
-	}
-	|	operando_b punto_tk operando_b	{
-	}
-	|	operando_b inicio_array_tk expresion fin_array_tk	{
-	}
-	|	operando_b ref_tk	{
-	};
+	int qTrue  = nextQuad();
+    gen(OP_IF_TRUE, t->sid, 0, 0);
+    int qFalse = nextQuad();
+    gen(GOTO, 0, 0, 0);
+    $$.TRUE  = makelist(qTrue);
+    $$.FALSE = makelist(qFalse);
+}
+| operando_b punto_tk operando_b	{
+}
+| operando_b inicio_array_tk expresion fin_array_tk	{
+}
+| operando_b ref_tk	{
+};
 
 /*operando : id_tk	{
 
@@ -500,98 +494,98 @@ operando_b : id_bool_tk	{
 //INSTRUCCIONES
 
 instrucciones : instruccion punto_coma_tk instrucciones	{
-	}
-	|	instruccion	{
-	};
+}
+|	instruccion	{
+};
 
 instruccion : continuar_tk	{
-	}
-	|	asignacion	{
-		
-	}
-	|	alternativa	{
-	}
-	|	iteracion	{
-	}
-	|	accion_ll	{
-	};
+}
+|	asignacion	{
+	
+}
+|	alternativa	{
+}
+|	iteracion	{
+}
+|	accion_ll	{
+};
 
 asignacion : operando_a asignacion_tk expresion	{
-		if($1.type == $3.type){
-			gen($2.operador, $3.place, -1, $1.place);
-		}
-		else if($1.type == REAL && $3.type == ENTERO){
-			entradaTS* t = insertarTemp();
-			modificarTipoTS(t, $1.type);
-			gen($2.operador, $3.place, -1, t->sid);
-			gen($2.operador, t->sid, -1, $1.place);
-		}
-		else if($1.type == ENTERO && $3.type == REAL){
-			printf("ERROR: Asignacion con tipos incorrectos\n");
-		}
-		else{
-			printf("ERROR: Valores incompatibles en asignacion\n");
-		}
+	if($1.type == $3.type){
+		gen($2.operador, $3.place, -1, $1.place);
 	}
-	|	operando_b asignacion_tk expresion	{
-	};
+	else if($1.type == REAL && $3.type == ENTERO){
+		entradaTS* t = insertarTemp();
+		modificarTipoTS(t, $1.type);
+		gen(OP_INT2REAL, $3.place, -1, t->sid); // conversion
+		gen($2.operador, t->sid, -1, $1.place); // asignacion
+	}
+	else if($1.type == ENTERO && $3.type == REAL){
+		printf("ERROR: no se puede asignar REAL a ENTERO\n");
+	}
+	else{
+		printf("ERROR: Tipos incompatibles en asignacion\n");
+	}
+}
+|	operando_b asignacion_tk expresion	{
+};
 
 alternativa : si_tk expresion entonces_tk instrucciones lista_opciones fsi_tk	{
-	};
+};
 
 lista_opciones : si_no_si_tk expresion entonces_tk instrucciones lista_opciones	{
-	}
-	| %empty	{
-	};
+}
+| %empty	{
+};
 
 iteracion : it_cota_fija	{
-	}
-	|	it_cota_exp	{
-	};
+}
+|	it_cota_exp	{
+};
 
 it_cota_exp : mientras_tk expresion hacer_tk instrucciones fmientras_tk	{
-	};
+};
 
 it_cota_fija : para_tk id_tk asignacion_tk expresion hasta_tk expresion hacer_tk instrucciones fpara_tk	{
-	};
+};
 
 
 //ACCIONES Y FUNCIONES
 
 accion_d : accion_tk a_cabecera bloque faccion_tk	{
-	};
+};
 
 funcion_d : funcion_tk f_cabecera bloque dev_tk expresion ffuncion_tk	{
-	};
+};
 
 a_cabecera : id_tk abrir_parentesis_tk d_par_form cerrar_parentesis_tk punto_coma_tk	{
-	};
+};
 
 f_cabecera : id_tk abrir_parentesis_tk lista_d_var cerrar_parentesis_tk dev_tk d_tipo punto_coma_tk	{
-	};
+};
 
 d_par_form : d_p_form punto_coma_tk d_par_form	{
-	}
-	|	%empty	{
-	};
+}
+|	%empty	{
+};
 
 d_p_form : ent_tk lista_id dos_puntos_tk d_tipo	{
-	}
-	|	sal_tk lista_id dos_puntos_tk d_tipo	{
-	}
-	| e_s_tk lista_id dos_puntos_tk d_tipo	{
-	};
+}
+|	sal_tk lista_id dos_puntos_tk d_tipo	{
+}
+| e_s_tk lista_id dos_puntos_tk d_tipo	{
+};
 
 accion_ll : id_tk abrir_parentesis_tk l_ll cerrar_parentesis_tk	{
-	};
+};
 
 funcion_ll : id_tk abrir_parentesis_tk l_ll cerrar_parentesis_tk	{
-	};
+};
 
 l_ll : expresion coma_tk l_ll	{
-	}
-	|	expresion	{
-	};
+}
+|	expresion	{
+};
 
 %%
 

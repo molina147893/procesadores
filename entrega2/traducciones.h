@@ -15,6 +15,8 @@ typedef enum {
     OP_DIV,    // dividir real
     OP_IDIV,   // div entero
     OP_MOD,
+    OP_INT2REAL,
+    
     OP_MAYQ,     // >
     OP_MENQ,     // <
     OP_MAYIQ,     // >=
