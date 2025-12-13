@@ -41,13 +41,24 @@ typedef struct {
     Operador operador; // Guardamos que operador es exactamente
 } OpInfo;
 
+// ---------------------- Lista de índices de cuádruplas ----------------------
+typedef struct nodoIndice {
+    int quad;                  // índice en tQuad
+    struct nodoIndice* sig;
+} NodoIndice;
+
+typedef struct {
+    NodoIndice* ini;           // lista enlazada de índices
+} ListaCuads;
+
+// ---------------------- Expresiones (ariméticas y booleanas) ----------------
 typedef struct {
     int place;          // el SID en la TS
     NombreDeTipoT type; // tipo de la expresión
     int esLiteral;  // 0 = variable/temp, 1 = literal
     
-    TablaCuadruplas TRUE; //Para booleanas (Saltos)
-    TablaCuadruplas FALSE; //Para booleanas (Saltos)
+    ListaCuads TRUE; // lista de cuadruplas pendientes si la expr es true (Saltos)
+    ListaCuads FALSE; // lista de cuadruplas pendientes si la expr es false (Saltos)
 } AtributosExpresion;
 
 typedef struct {
@@ -73,9 +84,13 @@ bool esNulaListaNombre(tipoListaNombre c);
 void insertarNombre(tipoListaNombre* c, char* nombre);
 
 //Para booleanas
-TablaCuadruplas makelist(int id);
-TablaCuadruplas merge(TablaCuadruplas t1, TablaCuadruplas t2);
-void backpatch(TablaCuadruplas t, int id);
+void nuevaListaCuads(ListaCuads* l);
+ListaCuads makelist(int quad);
+ListaCuads merge(ListaCuads l1, ListaCuads l2);
+void backpatch(ListaCuads* l, int destino);
 int nextQuad(); // Habria que pasarle aqui un id? Si no supongo que seria meterlo a cuadruplas.h y coger el id de la global y sumarle 1?
+
+
+
 
 #endif

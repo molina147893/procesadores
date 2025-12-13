@@ -387,12 +387,12 @@ literal_numerico : literal_entero_tk	{
 
 //oprel?? añadir al scanner mayor igual menor igual y distinto y juntarlos en comparadores
 exp_b : exp_b y_tk M exp_b {
-	backpatch($1.TRUE, $3.QUAD);
+	backpatch(&($1.TRUE), $3.QUAD);
 	$$.TRUE = $4.TRUE;
 	$$.FALSE = merge($1.FALSE, $4.FALSE);
 }
 | exp_b o_tk M exp_b {
-	backpatch($1.FALSE, $3.QUAD);
+	backpatch(&($1.FALSE), $3.QUAD);
 	$$.TRUE = merge($1.TRUE, $4.TRUE);
 	$$.FALSE = $4.FALSE;
 }

@@ -103,7 +103,7 @@ void imprimirTS() {
     entradaTS* actual = TS;
     printf("\n===== TABLA DE SÍMBOLOS =====\n");
     while (actual != NULL) {
-        printf("SID: %d   Nombre: %s   Tipo: %s\n",
+        printf("SID: %d\t   Nombre: %s\t   Tipo: %s\n",
                actual->sid,
                actual->nombre,
                nombreTipo(actual->tipo)); // convierte enum → cadena

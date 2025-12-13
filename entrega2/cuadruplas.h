@@ -4,7 +4,7 @@
 #include "tablaSimbolos.h"
 
 typedef struct {
-    int op;     // +, -, *, /, 'i' para int2real
+    int op;     // +, -, *, /
     int arg1;    // SID TS
     int arg2;    // SID TS o -1 si no aplica
     int resultado;     // SID TS donde se guarda resultado

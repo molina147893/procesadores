@@ -60,18 +60,53 @@ void liberarListaNombre(tipoListaNombre* l) {
     free(l);
 }
 
-TablaCuadruplas makelist(int id){
-    
+// Crear lista vacía
+void nuevaListaCuads(ListaCuads* l) {
+    l->ini = NULL;
 }
 
-TablaCuadruplas merge(TablaCuadruplas t1, TablaCuadruplas t2){
-    
+// Crear una lista con un único índice
+ListaCuads makelist(int quad) {
+    ListaCuads l;
+    nuevaListaCuads(&l);
+    NodoIndice* n = malloc(sizeof(NodoIndice));
+    n->quad = quad;
+    n->sig = NULL;
+    l.ini = n;
+    return l;
 }
 
-void backpatch(TablaCuadruplas t, int id){
+// Concatenar 2 listas
+ListaCuads merge(ListaCuads l1, ListaCuads l2) {
+    ListaCuads nueva;
+    nuevaListaCuads(&nueva);
+    NodoIndice* aux;
     
+    for(aux = l1.ini; aux != NULL; aux = aux->sig) { // Copiar l1
+        NodoIndice* n = malloc(sizeof(NodoIndice));
+        n->quad = aux->quad;
+        n->sig = nueva.ini;
+        nueva.ini = n;
+    }
+    
+    for(aux = l2.ini; aux != NULL; aux = aux->sig) { // Copiar l2
+        NodoIndice* n = malloc(sizeof(NodoIndice));
+        n->quad = aux->quad;
+        n->sig = nueva.ini;
+        nueva.ini = n;
+    }
+    return nueva;
 }
 
-int nextQuad(){
-    
+// Backpatch: poner la cuádrupla de destino a todos los índices
+void backpatch(ListaCuads* l, int destino) {
+    NodoIndice* aux;
+    for(aux = l->ini; aux != NULL; aux = aux->sig) {
+        tQuad.datos[aux->quad].resultado = destino;
+    }
+}
+
+// Devuelve la posición de la siguiente cuádrupla
+int nextQuad() {
+    return tQuad.n; // tQuad.n es el número de cuádruplas ya generadas
 }

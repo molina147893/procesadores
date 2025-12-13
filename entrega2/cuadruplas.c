@@ -58,6 +58,7 @@ char* nombreOperador(Operador o) {
 		case OP_IDIV: return "/";
 		case OP_MOD: return "mod";
 		case OP_INT2REAL: return "int2real";
+		
 		case OP_MAYQ: return ">";
 		case OP_MENQ: return "<";
 		case OP_MAYIQ: return ">=";
@@ -75,7 +76,7 @@ void imprimirTC(TablaCuadruplas* t){
 	printf("\n===== TABLA DE CUADRUPLAS =====\n");
 	
 	for(int i = 0; i < t->n; i++){
-		printf("CUADRUPLA %d: (%s, %d, %d, %d)\n", i, nombreOperador(t->datos[i].op), t->datos[i].arg1, t->datos[i].arg2, t->datos[i].resultado);
+		printf("CUADRUPLA %d:\t (%s, %d, %d, %d)\n", i, nombreOperador(t->datos[i].op), t->datos[i].arg1, t->datos[i].arg2, t->datos[i].resultado);
 	}
 	
 	printf("=============================\n");
