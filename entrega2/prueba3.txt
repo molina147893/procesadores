@@ -5,7 +5,10 @@ sal r: real;
 	var
 		t: entero;
 		f: caracter;
+		bt, bp: booleano;
+		cad, cod: cadena;
 	fvar;
+	bt := bp;
 	f := a + a;
 	t := a / d;
 	c := r;

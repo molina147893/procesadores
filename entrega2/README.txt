@@ -6,19 +6,19 @@ Autores: Iván Latasa Sancha y Alejandro Molina Puyuelo - Grupo 2 de prácticas
 - Gestión de la tabla de símbolos y tabla de cuádruplas
 - Implementación de las expresiones aritméticas completas con sus operadores: +, -, *, div y mod, int2real ...
 - Expresiones booleanas con operadores relacionales: <, >, <=, >= y <>.
-- Las expresiones booleanas generan correctamente las cuádruplas, aunque la gestión completa de los goto no está terminada
+- Las expresiones booleanas generan correctamente las cuádruplas y las listas TRUE/FALSE, la gestión de los goto no está completamente implementada
 - Detección de errores semánticos (por ejemplo intentar convertir real a entero)
-- Hemos intentado implementar los marcadores M y N, los literales numéricos y booleanos, aunque estas partes han quedando incompletas por falta de tiempo
+- Hemos iniciado las implementaciones de los marcadores M y N, los literales numéricos y booleanos, aunque estas partes han quedando incompletas por falta de tiempo
 
 2. CARACTERÍSTICAS DEL LÉXICO Y LA GRAMÁTICA
 - La gramática tiene conflictos S/R y R/R esperables, que han sido resueltos con precedencia y asociatividad en Bison
-- Toda variable booleana empieza por la letra b o la letra B, debido a esto se han cambiado las variable "b" de los ejemplos por "d" ya que no eran de tipo booleano
+- Toda variable booleana empieza por la letra b o la letra B, debido a esto se han cambiado las variables "b" de los ejemplos por "d" ya que no eran de tipo booleano
 
 3. FICHEROS DE PRUEBA
 - prueba1.txt: algoritmo sumacomb con alguna modificación
 - prueba2.txt: algoritmo orden3
 - prueba3.txt: uso de otros operadores y generación de errores semánticos.
--En los ficheros 1 y 3 se han dejado errores de tipos para comprobar que se detectan y se imprimen
+-En los ficheros prueba1.txt y prueba3.txt se han dejado errores de tipos para comprobar que se detectan y se imprimen
 
 4. COMPILACIÓN Y EJECUCIÓN
 Compilar:
