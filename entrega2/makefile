@@ -7,7 +7,7 @@ flex: scanner.l
 	flex scanner.l
 
 bison: parser.y
-	bison -v -d -t parser.y
+	bison -v -d parser.y
 
 lex: lex.yy.c
 	gcc -c lex.yy.c

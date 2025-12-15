@@ -13,8 +13,7 @@
 	int yylex();
 	extern FILE* yyin;
 	void yyerror(char * s);
-	//TablaDeConstantes tc;
-	#define YYDEBUG 1
+
 %}
 
 
@@ -29,6 +28,7 @@
     OpInfo op;	//Operador exacto
     AtributosExpresion atr; // atributos .place .type y .esLiteral
     AuxM auxM;
+    AuxN auxN;
 }
 
 
@@ -119,6 +119,7 @@
 %type <atr> expresion exp_a operando_a literal_numerico
 %type <atr> exp_b operando_b 
 %type <auxM> M
+%type <auxN> N lista_opciones instrucciones instruccion
 
 
 %%
@@ -405,18 +406,23 @@ exp_b : exp_b y_tk M exp_b {
 	$$.FALSE = $1.FALSE;
 }
 | verdadero_tk {
+	int q = nextQuad();
+    	gen(GOTO, -1, -1, -1);
+    	$$.TRUE  = makelist(q);
+    	$$.FALSE = (ListaCuads){ NULL };
 }
 | falso_tk {
+	int q = nextQuad();
+    	gen(GOTO, -1, -1, -1);
+    	$$.FALSE = makelist(q);
+    	$$.TRUE  = (ListaCuads){ NULL };
 }
 | expresion oprel_tk expresion {
-	// $$.TRUE = makelist(nextQuad()); // Supongo que nextQuad tiene que devolver un entero
-	// $$.FALSE = makelist(nextQuad()+1); // Para coger la siguiente cuadrupla +1 ?
-	// gen($2.operador, $1.place, $3.place, 0);
 	
 	int qTrue = nextQuad();
-	gen($2.operador, $1.place, $3.place, 0); // salto condicional
+	gen($2.operador, $1.place, $3.place, -1); // salto condicional
 	int qFalse = nextQuad();
-	gen(GOTO, 0, 0, 0); // salto incondicional
+	gen(GOTO, -1, -1, -1); // salto incondicional
 	$$.TRUE  = makelist(qTrue);
 	$$.FALSE = makelist(qFalse);
 }
@@ -427,6 +433,11 @@ exp_b : exp_b y_tk M exp_b {
 
 M : %empty 	{
 	$$.QUAD = nextQuad();
+};
+
+N : %empty	{
+	$$.NEXT = makelist(nextQuad());
+    	gen(GOTO, -1, -1, -1);
 };
 
 expresion : exp_a	{
@@ -464,11 +475,11 @@ operando_b : id_bool_tk	{
 	}
 	$$.type = BOOLEANO;
 	int qTrue  = nextQuad();
-    gen(OP_IF_TRUE, t->sid, 0, 0);
-    int qFalse = nextQuad();
-    gen(GOTO, 0, 0, 0);
-    $$.TRUE  = makelist(qTrue);
-    $$.FALSE = makelist(qFalse);
+    	gen(OP_IF_TRUE, t->sid, -1, -1);
+    	int qFalse = nextQuad();
+    	gen(GOTO, -1, -1, -1);
+    	$$.TRUE  = makelist(qTrue);
+    	$$.FALSE = makelist(qFalse);
 }
 | operando_b punto_tk operando_b	{
 }
@@ -530,10 +541,12 @@ asignacion : operando_a asignacion_tk expresion	{
 |	operando_b asignacion_tk expresion	{
 };
 
-alternativa : si_tk expresion entonces_tk instrucciones lista_opciones fsi_tk	{
+alternativa : si_tk expresion entonces_tk M instrucciones lista_opciones fsi_tk	{
+
 };
 
 lista_opciones : si_no_si_tk expresion entonces_tk instrucciones lista_opciones	{
+
 }
 | %empty	{
 };
@@ -590,9 +603,7 @@ l_ll : expresion coma_tk l_ll	{
 %%
 
 int main(int argc, char **argv){
-	#if defined YYDEBUG
-	yydebug=1;
-	#endif
+
 	++argv, --argc;
 	if (argc > 0)
 		yyin = fopen(argv[0], "r");

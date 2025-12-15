@@ -110,3 +110,7 @@ void backpatch(ListaCuads* l, int destino) {
 int nextQuad() {
     return tQuad.n; // tQuad.n es el número de cuádruplas ya generadas
 }
+
+bool isEmpty(TablaCuadruplas t){
+	return t.n == NULL;
+}
