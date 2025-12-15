@@ -264,7 +264,14 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 }
 {id_def}	{
 	yylval.cad = strdup(yytext);
-    return id_tk;
+	
+    	// Revisamos si empieza por 'b' o 'B'
+    	if (yytext[0] == 'b' || yytext[0] == 'B') {
+        	return id_bool_tk;  // token para variables booleanas
+    	}
+    	else {
+        	return id_tk;       // token normal
+    	}
 }
 {abrir_parentesis_def}	{
 	return abrir_parentesis_tk;

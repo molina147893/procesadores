@@ -247,7 +247,15 @@ lista_id : id_tk coma_tk lista_id	{
 	nuevaCelda($3, $1); 
 	$$ = $3;
 }
+|	id_bool_tk coma_tk lista_id	{
+	nuevaCelda($3, $1);
+	$$ = $3;
+}
 | id_tk	{
+	$$ = nuevaLista();
+	nuevaCelda($$, $1);
+}
+| id_bool_tk{
 	$$ = nuevaLista();
 	nuevaCelda($$, $1);
 };
@@ -457,6 +465,7 @@ operando_b : id_bool_tk	{
 	if(!t){
 		printf("ERROR: variable %s no declarada\n", $1);
 	}
+	$$.place = t->sid;
 	$$.type = BOOLEANO;
 	int qTrue  = nextQuad();
     	gen(OP_IF_TRUE, t->sid, -1, -1);
@@ -480,7 +489,7 @@ instrucciones : instruccion punto_coma_tk instrucciones	{
 |	instruccion	{
 };
 
-instruccion : continuar_tk	N{
+instruccion : continuar_tk N{
 }
 |	asignacion	{
 	
@@ -510,6 +519,15 @@ asignacion : operando_a asignacion_tk expresion	{
 	}
 }
 |	operando_b asignacion_tk expresion	{
+	if ($1.type != BOOLEANO || $3.type != BOOLEANO) {
+        	printf("ERROR: Tipos incompatibles en asignacion booleana\n");
+    	} 
+    	else {
+		backpatch(&($3.TRUE), nextQuad());
+		gen($2.operador, $3.place, -1, $1.place);   // TRUE
+		backpatch(&($3.FALSE), nextQuad());
+		gen($2.operador, 0, -1, $1.place);   // FALSE
+    }
 };
 
 alternativa : si_tk expresion entonces_tk M instrucciones lista_opciones fsi_tk	{

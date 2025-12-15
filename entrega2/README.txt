@@ -12,11 +12,13 @@ Autores: Iván Latasa Sancha y Alejandro Molina Puyuelo - Grupo 2 de prácticas
 
 2. CARACTERÍSTICAS DEL LÉXICO Y LA GRAMÁTICA
 - La gramática tiene conflictos S/R y R/R esperables, que han sido resueltos con precedencia y asociatividad en Bison
+- Toda variable booleana empieza por la letra b o la letra B, debido a esto se han cambiado las variable "b" de los ejemplos por "d" ya que no eran de tipo booleano
 
 3. FICHEROS DE PRUEBA
 - prueba1.txt: algoritmo sumacomb con alguna modificación
 - prueba2.txt: algoritmo orden3
 - prueba3.txt: uso de otros operadores y generación de errores semánticos.
+-En los ficheros 1 y 3 se han dejado errores de tipos para comprobar que se detectan y se imprimen
 
 4. COMPILACIÓN Y EJECUCIÓN
 Compilar:
