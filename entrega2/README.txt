@@ -15,17 +15,17 @@ Autores: Iván Latasa Sancha y Alejandro Molina Puyuelo - Grupo 2 de prácticas
 - Toda variable booleana empieza por la letra b o la letra B, debido a esto se han cambiado las variables "b" de los ejemplos por "d" ya que no eran de tipo booleano
 
 3. FICHEROS DE PRUEBA
-- prueba1.txt: algoritmo sumacomb con alguna modificación
-- prueba2.txt: algoritmo orden3
-- prueba3.txt: uso de otros operadores y generación de errores semánticos.
--En los ficheros prueba1.txt y prueba3.txt se han dejado errores de tipos para comprobar que se detectan y se imprimen
+- programa1.alg: algoritmo sumacomb con alguna modificación
+- programa2.alg: algoritmo orden3
+- programa3.alg: uso de otros operadores y generación de errores semánticos.
+-En los ficheros programa1.alg y programa3.alg se han dejado errores de tipos para comprobar que se detectan y se imprimen
 
 4. COMPILACIÓN Y EJECUCIÓN
 Compilar:
     make
 
 Ejecutar:
-    ./a.out pruebaX.txt
+    ./a.out programaX.alg
 
 Limpiar:
     make clean
