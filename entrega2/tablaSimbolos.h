@@ -2,6 +2,7 @@
 #define TABLA_SIMBOLOS_H
 
 #include "nombresDeTipos.h"
+#include <stdio.h>
 
 typedef struct entradaTS {
     char* nombre;
@@ -18,6 +19,6 @@ entradaTS* buscarPorNombre(char* nombre);
 entradaTS* buscarPorSID(int sid);
 void modificarTipoTS(entradaTS* e, NombreDeTipoT tipo);
 NombreDeTipoT consultarTipoTS(char* nombre);
-void imprimirTS(); // opcional
-
+void imprimirTS();
+void imprimirTS_en(FILE *out);
 #endif

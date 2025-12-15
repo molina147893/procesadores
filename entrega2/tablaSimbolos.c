@@ -98,18 +98,22 @@ char* nombreTipo(NombreDeTipoT t) {
     }
 }
 
-// Imprimir tabla de símbolos
 void imprimirTS() {
+    imprimirTS_en(stdout);
+}
+
+// Imprimir tabla de símbolos
+void imprimirTS_en(FILE *out) {
     entradaTS* actual = TS;
-    printf("\n===== TABLA DE SÍMBOLOS =====\n");
+    fprintf(out, "\n===== TABLA DE SÍMBOLOS =====\n");
     while (actual != NULL) {
-        printf("SID: %d\t   Nombre: %s\t   Tipo: %s\n",
+        fprintf(out, "SID: %d\t   Nombre: %s\t   Tipo: %s\n",
                actual->sid,
                actual->nombre,
                nombreTipo(actual->tipo)); // convierte enum → cadena
         actual = actual->sig;
     }
-    printf("=============================\n");
+    fprintf(out, "=============================\n");
 }
 
 

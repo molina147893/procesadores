@@ -21,7 +21,6 @@ digito_def [0-9]
 letra_def [A-Za-z]
 op1_def [+-]
 op2_def [*/]
- //Se podria meter ahi tambien div y mod
 caracteres_espaciadores_def [ \t\n]
 asignacion_def :=
 comillas_dobles_def \"
@@ -99,8 +98,7 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 %%
 
  //SECCION 2: REGLAS
- //2.1
- //Literales
+{caracteres_espaciadores_def}+ ;
 {literal_entero_def}	{
 	printf("Literal entero: %d\n", atoi(yytext));
 	return literal_entero_tk;
@@ -328,6 +326,7 @@ comentario_def \{([^\}]*(\/\})*[^\}]*)\}
 {si_no_si_def}	{
 	return si_no_si_tk;
 }
+
 {op1_def}	{ //Guardamos si es + o -
 	if (yytext[0] == '+'){
 		yylval.op.operador = OP_SUM;

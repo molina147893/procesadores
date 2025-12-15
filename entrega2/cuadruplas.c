@@ -71,13 +71,16 @@ char* nombreOperador(Operador o) {
     }
 }
 
-
 void imprimirTC(TablaCuadruplas* t){
-	printf("\n===== TABLA DE CUADRUPLAS =====\n");
+	imprimirTC_en(stdout, t);
+}
+
+void imprimirTC_en(FILE *out, TablaCuadruplas* t){
+	fprintf(out, "\n===== TABLA DE CUADRUPLAS =====\n");
 	
 	for(int i = 0; i < t->n; i++){
-		printf("CUADRUPLA %d:\t (%s, %d, %d, %d)\n", i, nombreOperador(t->datos[i].op), t->datos[i].arg1, t->datos[i].arg2, t->datos[i].resultado);
+		fprintf(out, "CUADRUPLA %d:\t (%s, %d, %d, %d)\n", i, nombreOperador(t->datos[i].op), t->datos[i].arg1, t->datos[i].arg2, t->datos[i].resultado);
 	}
 	
-	printf("=============================\n");
+	fprintf(out, "=============================\n");
 }

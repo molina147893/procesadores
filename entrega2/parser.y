@@ -4,10 +4,9 @@
 	#include <string.h>
 	#include <stdlib.h>
 	
-	#include "nombresDeTipos.h"    // Para NombreDeTipoT
-	#include "traducciones.h"      // Para tipoListaNombre
-	#include "tablaSimbolos.h"     // Para las rutinas de TS
-	#include "literal.h"
+	#include "nombresDeTipos.h"    
+	#include "traducciones.h"   
+	#include "tablaSimbolos.h"     
 	#include "cuadruplas.h"
 	
 	int yylex();
@@ -18,15 +17,15 @@
 
 
 %union {
-    int ent; // literal entero
-    float real; // literal real
-    char car; // literal caracter
-    int booleano; // verdadero 1 /falso 0 ??
-    char* cad; // literal cadena
-    NombreDeTipoT tipo;         // para d_tipo / tipo_base
+    int ent; 
+    float real; 
+    char car; 
+    int booleano; 
+    char* cad; 
+    NombreDeTipoT tipo; 
     tipoListaNombre* lista; // para lista de ids
     OpInfo op;	//Operador exacto
-    AtributosExpresion atr; // atributos .place .type y .esLiteral
+    AtributosExpresion atr; // atributos .place .type
     AuxM auxM;
     AuxN auxN;
 }
@@ -36,7 +35,7 @@
 %token <real> literal_real_tk
 %token <car> literal_caracter_tk
 %token <cad> literal_cadena_tk
-%token <booleano> verdadero_tk	// también podrías tratarlas como tokens sin valor y crear booleanos en el parser
+%token <booleano> verdadero_tk
 %token <booleano> falso_tk
 %token <op> op1_tk op2_tk div_mod_tk
 
@@ -52,7 +51,6 @@
 %token continuar_tk
 %token de_tk
 %token dev_tk
-//%token div_tk
 %token ent_tk
 %token entero_tk
 %token e_s_tk
@@ -72,7 +70,6 @@
 %token fvar_tk
 %token hacer_tk
 %token hasta_tk
-//%token mod_tk
 %token no_tk
 %token o_tk
 %token real_tk
@@ -82,7 +79,7 @@
 %token y_tk
 %token <cad> comentario_tk
 %token <cad> id_tk
-%token <cad>id_bool_tk //b mayus/minus seguido de lo que sea
+%token <cad> id_bool_tk //b mayus/minus seguido de lo que sea
 //%token comillas_dobles_tk
 //%token comilla_simple_tk
 //%token barra_lateral_tk
@@ -95,16 +92,11 @@
 %token punto_coma_tk
 %token punto_tk
 %token dos_puntos_tk
-//%token mayor_que_tk
-//%token menor_que_tk
 %token subrango_tk
 %token <op> asignacion_tk
 %token entonces_tk
 %token si_no_si_tk
 
-//%token op1_tk
-//%token op2_tk
-//%token div_mod_tk
 %token <op> oprel_tk
 
 
@@ -195,7 +187,7 @@ d_tipo : tupla_tk lista_campos ftupla_tk	{
 	$$ = $1;
 };
 
-//Esto lo hemos añadido nosotros, esta bien o hay que meterlo directamente en lista_d_tipo
+//Esto lo hemos añadido nosotros
 tipo_base : entero_tk { 
 	$$ = ENTERO; 
 }
@@ -227,9 +219,8 @@ lista_campos : id_tk dos_puntos_tk d_tipo punto_coma_tk lista_campos	{
 lista_d_cte : id_tk igual_tk literal punto_coma_tk lista_d_cte	{
 }
 |	%empty	{
-}; //En algunas instalaciones de bison puede no reconocer, cambiar por un comentario del tipo /*empty*/ seria correcto
+}; 
 
-//Verdadero y falso correcto?
 literal : literal_entero_tk	{
 }
 | literal_real_tk	{
@@ -278,7 +269,7 @@ decl_salida : sal_tk lista_d_var	{
 //EXPRESIONES
 
 exp_a : exp_a op1_tk exp_a	{
-	entradaTS* t = insertarTemp(); // Crear e insertar nuevo temporal
+	entradaTS* t = insertarTemp(); 
 	$$.place = t->sid;
 	if(($1.type == ENTERO) && ($3.type == ENTERO)){
 		modificarTipoTS(t, ENTERO);
@@ -346,7 +337,7 @@ exp_a : exp_a op1_tk exp_a	{
 	$$.type  = $2.type;
 }
 | operando_a	{
-	if(($1.type == ENTERO) || ($1.type == REAL)){ //Verificamos que sea del tipo permitido por las operaciones aritmeticas
+	if(($1.type == ENTERO) || ($1.type == REAL)){ 
 		$$.type = $1.type;
 		$$.place = $1.place;
 	}
@@ -354,7 +345,7 @@ exp_a : exp_a op1_tk exp_a	{
 		printf("ERROR: Tipo no permitido en operaciones aritmeticas\n");
 	}
 }
-| literal_numerico	{	//Esto supongo que es asi
+| literal_numerico	{
 	$$.type = $1.type;
 	$$.place = $1.place;
 }
@@ -366,19 +357,13 @@ exp_a : exp_a op1_tk exp_a	{
 	$$.place = t->sid;
 	modificarTipoTS(t, $2.type);
 	$$.type = $2.type;
-	gen($1.operador, $2.place, -1, $$.place); // HACER resta = negación unaria
+	gen($1.operador, $2.place, -1, $$.place); // resta = negación unaria
 };
 
-//Literal numerico: van directos a las cuadruplas
 literal_numerico : literal_entero_tk	{
 	$$.place = $1;
 	$$.type  = ENTERO;
 	$$.esLiteral = 1; 
-	/*entradaTS* t = insertarTemp();
-	$$.place = t->sid;
-	$$.type = ENTERO;
-	modificarTipoTS(t, ENTERO);
-	$$.val = */
 }
 |literal_real_tk{
 	$$.place = $1;
@@ -386,7 +371,6 @@ literal_numerico : literal_entero_tk	{
 	$$.esLiteral = 1;
 };
 
-//oprel?? añadir al scanner mayor igual menor igual y distinto y juntarlos en comparadores
 exp_b : exp_b y_tk M exp_b {
 	backpatch(&($1.TRUE), $3.QUAD);
 	$$.TRUE = $4.TRUE;
@@ -437,7 +421,7 @@ M : %empty 	{
 
 N : %empty	{
 	$$.NEXT = makelist(nextQuad());
-    	gen(GOTO, -1, -1, -1);
+	gen(GOTO, -1, -1, -1);
 };
 
 expresion : exp_a	{
@@ -459,7 +443,7 @@ operando_a : id_tk	{
 	}
 	$$.place = t->sid;
 	$$.type  = t->tipo;
-	t = NULL; //?
+	t = NULL;
 }
 | operando_a punto_tk operando_a	{
 }
@@ -488,19 +472,6 @@ operando_b : id_bool_tk	{
 | operando_b ref_tk	{
 };
 
-/*operando : id_tk	{
-
-}
-|	operando punto_tk operando	{
-
-}
-|	operando inicio_array_tk expresion fin_array_tk	{
-
-}
-|	operando ref_tk	{
-
-};*/
-
 
 //INSTRUCCIONES
 
@@ -509,7 +480,7 @@ instrucciones : instruccion punto_coma_tk instrucciones	{
 |	instruccion	{
 };
 
-instruccion : continuar_tk	{
+instruccion : continuar_tk	N{
 }
 |	asignacion	{
 	
@@ -603,7 +574,6 @@ l_ll : expresion coma_tk l_ll	{
 %%
 
 int main(int argc, char **argv){
-
 	++argv, --argc;
 	if (argc > 0)
 		yyin = fopen(argv[0], "r");
@@ -611,11 +581,33 @@ int main(int argc, char **argv){
 		yyin = stdin;
 	TS = NULL;       // Inicializa la TS
 	tQuad = crearTabla(10); // inicializa tabla global de cuadruplas
+	
 	yyparse();
-	imprimirTS();    // solo para debug
+	
+	// Salida por pantalla
+	imprimirTS();
 	imprimirTC(&tQuad);
+	
+	// Salida a ficheros
+	FILE *fts = fopen("tabla_simbolos.txt", "w");
+    FILE *ftc = fopen("tabla_cuadruplas.txt", "w");
+
+    if (!fts || !ftc) {
+        fprintf(stderr, "ERROR: no se pudieron crear los ficheros de salida\n");
+    } else {
+        imprimirTS_en(fts);
+        imprimirTC_en(ftc, &tQuad);
+    }
+
+    if (fts)
+		fclose(fts);
+    if (ftc)
+		fclose(ftc);
+
+    return 0;
 }
 
-void yyerror(char * s){
-	printf("\tBISON: ERROR, %s\n", s);
+void yyerror(char *s){
+    fprintf(stderr, "BISON, ERROR: %s\n", s);
 }
+

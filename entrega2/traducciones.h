@@ -66,7 +66,8 @@ typedef struct {
 }AuxM;
 
 typedef struct {
-	TablaCuadruplas NEXT;
+	ListaCuads NEXT;
+    int QUAD;
 }AuxN;
 
 // Constructor de lista vacía
@@ -88,7 +89,7 @@ void nuevaListaCuads(ListaCuads* l);
 ListaCuads makelist(int quad);
 ListaCuads merge(ListaCuads l1, ListaCuads l2);
 void backpatch(ListaCuads* l, int destino);
-int nextQuad(); // Habria que pasarle aqui un id? Si no supongo que seria meterlo a cuadruplas.h y coger el id de la global y sumarle 1?
+int nextQuad(); 
 
 bool isEmpty(TablaCuadruplas t);
 

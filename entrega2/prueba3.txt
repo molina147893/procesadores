@@ -1,0 +1,23 @@
+algoritmo pruebaError;
+ent a, b, c: entero; 
+sal r: real; 
+{Prec: a = A AND b = B AND c = C}
+	var
+		t: entero;
+		f: caracter;
+	fvar;
+	f := a + a;
+	t := a / b;
+	c := r;
+	r := a mod b;
+
+	si a >= b y a <> c ->
+		r := r + r
+	[] a < b y b <> c ->
+		r := r - r
+	[] c > a ->
+		continuar
+	fsi
+{Post: a=A AND b = B AND c= C ...}
+falgoritmo.
+

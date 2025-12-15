@@ -112,5 +112,5 @@ int nextQuad() {
 }
 
 bool isEmpty(TablaCuadruplas t){
-	return t.n == NULL;
+	return t.n == 0;
 }

@@ -7,7 +7,7 @@ typedef enum nombreDeTipoT {
     CARACTER,
     ENTERO,
     REAL,
-    TIPO_INVALIDO   // <-- Nuevo valor
+    TIPO_INVALIDO
 } NombreDeTipoT;
 
 #endif

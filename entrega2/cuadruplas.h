@@ -2,6 +2,7 @@
 #define CUADRUPLAS_H
 
 #include "tablaSimbolos.h"
+#include <stdio.h>
 
 typedef struct {
     int op;     // +, -, *, /
@@ -22,5 +23,6 @@ TablaCuadruplas crearTabla(int capacidad);
 void gen(int op, int arg1, int arg2, int resultado);
 void liberarTC(TablaCuadruplas* t);
 void imprimirTC(TablaCuadruplas* t);
+void imprimirTC_en(FILE *out, TablaCuadruplas* t);
 
 #endif
