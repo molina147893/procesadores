@@ -23,7 +23,6 @@ typedef enum {
     OP_MENIQ,     // <=
     OP_IGU,     // ==
     OP_DIST,      // <>
-    OP_IF_TRUE, //Para booleanas
     GOTO
 } Operador;
 

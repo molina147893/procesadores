@@ -468,7 +468,7 @@ operando_b : id_bool_tk	{
 	$$.place = t->sid;
 	$$.type = BOOLEANO;
 	int qTrue  = nextQuad();
-    	gen(OP_IF_TRUE, t->sid, -1, -1);
+    	gen(GOTO, t->sid, -1, -1);
     	int qFalse = nextQuad();
     	gen(GOTO, -1, -1, -1);
     	$$.TRUE  = makelist(qTrue);

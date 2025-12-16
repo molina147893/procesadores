@@ -6,7 +6,7 @@ Autores: Iván Latasa Sancha y Alejandro Molina Puyuelo - Grupo 2 de prácticas
 - Gestión de la tabla de símbolos y tabla de cuádruplas
 - Implementación de las expresiones aritméticas completas con sus operadores: +, -, *, div y mod, int2real ...
 - Expresiones booleanas con operadores relacionales: <, >, <=, >= y <>.
-- Las expresiones booleanas generan correctamente las cuádruplas y las listas TRUE/FALSE, la gestión de los goto no está completamente implementada
+- Las expresiones booleanas generan correctamente las cuádruplas, la gestión de los goto no está completamente implementada
 - Detección de errores semánticos (por ejemplo intentar convertir real a entero)
 - Hemos iniciado las implementaciones de los marcadores M y N, los literales numéricos y booleanos, aunque estas partes han quedando incompletas por falta de tiempo
 

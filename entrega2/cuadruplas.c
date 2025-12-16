@@ -65,7 +65,6 @@ char* nombreOperador(Operador o) {
 		case OP_MENIQ: return "<=";
 		case OP_IGU: return "==";
 		case OP_DIST: return "<>";
-		case OP_IF_TRUE: return "ifTrue";
 		case GOTO: return "goto";
         default: return "invalido";
     }
